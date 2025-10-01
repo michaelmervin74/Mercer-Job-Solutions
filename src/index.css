@@ -1,0 +1,294 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--mercer-font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8fafc;
+  color: #1e293b;
+  line-height: 1.6;
+}
+
+/* Apply font to all elements */
+* {
+  font-family: var(--mercer-font);
+}
+
+/* Typography improvements */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--mercer-font);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+p, span, div, button, input, select, textarea {
+  font-family: var(--mercer-font);
+}
+
+/* Improved font rendering */
+button, input, select, textarea {
+  font-family: var(--mercer-font);
+  font-weight: 400;
+}
+
+/* Chatbot animations */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* Mercer Brand Colors - Updated Palette */
+:root {
+  --mercer-font: 'Source Sans Pro', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  --mercer-primary: #4a90e2;        /* Bright blue */
+  --mercer-primary-dark: #2c5aa0;   /* Dark blue/navy */
+  --mercer-primary-light: #7bb3f0;  /* Light blue/sky blue */
+  --mercer-secondary: #50c878;      /* Teal/dark cyan */
+  --mercer-secondary-dark: #2d8659; /* Dark teal/blue-green */
+  --mercer-accent: #ffd700;         /* Bright yellow */
+  --mercer-accent-orange: #ff8c00;  /* Orange */
+  --mercer-success: #32cd32;        /* Green */
+  --mercer-purple: #9370db;         /* Light purple/lavender */
+  --mercer-gray: #708090;           /* Medium gray-blue/slate blue */
+  --mercer-gray-dark: #2f4f4f;      /* Dark gray/charcoal */
+  --mercer-gray-light: #f8f9fa;     /* Light gray background */
+  --mercer-white: #ffffff;
+  --mercer-border: #e2e8f0;
+  --mercer-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --mercer-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Utility Classes */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.card {
+  background: var(--mercer-white);
+  border-radius: 12px;
+  box-shadow: var(--mercer-shadow);
+  border: 1px solid var(--mercer-border);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  background: var(--mercer-primary);
+  color: var(--mercer-white);
+}
+
+.btn-primary:hover {
+  background: var(--mercer-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--mercer-shadow-lg);
+}
+
+.btn-secondary {
+  background: var(--mercer-white);
+  color: var(--mercer-primary);
+  border: 1px solid var(--mercer-primary);
+}
+
+.btn-secondary:hover {
+  background: var(--mercer-primary);
+  color: var(--mercer-white);
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--mercer-border);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  transition: border-color 0.2s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--mercer-blue);
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+.select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--mercer-border);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  background: var(--mercer-white);
+  cursor: pointer;
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.text-mercer-primary {
+  color: var(--mercer-primary);
+}
+
+.text-mercer-secondary {
+  color: var(--mercer-secondary);
+}
+
+.text-mercer-accent {
+  color: var(--mercer-accent);
+}
+
+.text-mercer-gray {
+  color: var(--mercer-gray);
+}
+
+.text-mercer-gray-dark {
+  color: var(--mercer-gray-dark);
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.p-6 {
+  padding: 1.5rem;
+}
+
+.rounded-lg {
+  border-radius: 8px;
+}
+
+.rounded-xl {
+  border-radius: 12px;
+}
+
+.shadow {
+  box-shadow: var(--mercer-shadow);
+}
+
+.shadow-lg {
+  box-shadow: var(--mercer-shadow-lg);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 0.5rem;
+  }
+  
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+  
+  .text-3xl {
+    font-size: 1.5rem;
+  }
+  
+  .text-2xl {
+    font-size: 1.25rem;
+  }
+}

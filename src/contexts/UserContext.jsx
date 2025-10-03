@@ -10,14 +10,16 @@ export const useUser = () => {
   return context;
 };
 
-export const UserProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState({
+// Define available personas
+const personas = {
+  sarah: {
     id: "mercer_consultant_001",
     name: "Sarah Chen",
-    // title: 'Senior HR Strategy Consultant',
     role: "CHRO Advisor",
+    title: "Senior HR Strategy Consultant",
     email: "sarah.chen@mercer.com",
     avatar: "SC",
+    profileImage: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
     department: "Human Capital",
     location: "Singapore",
     experience: "12 years",
@@ -41,7 +43,47 @@ export const UserProvider = ({ children }) => {
       "samsung",
       "unilever",
     ],
-  });
+  },
+  james: {
+    id: "mercer_analyst_002",
+    name: "James Patel",
+    role: "Senior Compensation Analyst",
+    title: "Senior Compensation Analyst",
+    email: "james.patel@mercer.com",
+    avatar: "JP",
+    profileImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+    department: "Total Rewards Advisory",
+    location: "Chicago, IL",
+    experience: "5-8 years",
+    specializations: [
+      "Pay Architecture & Salary Structures",
+      "Annual Comp Planning & Budgeting",
+      "Sales Comp Design",
+      "M&A Due Diligence",
+    ],
+    lastLogin: "2024-01-15T09:15:00Z",
+    permissions: [
+      "view_all_clients",
+      "edit_benchmarks",
+      "create_surveys",
+      "export_reports",
+      "model_scenarios",
+      "age_compensation_data",
+    ],
+    clientAccess: [
+      "microsoft",
+      "jpmorgan",
+      "pfizer",
+      "walmart",
+      "samsung",
+      "unilever",
+    ],
+  },
+};
+
+export const UserProvider = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState(personas.sarah);
+  const [activePersona, setActivePersona] = useState("sarah");
 
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
@@ -60,6 +102,23 @@ export const UserProvider = ({ children }) => {
     setCurrentUser((prev) => ({ ...prev, ...updates }));
   };
 
+  const switchPersona = (personaKey) => {
+    if (personas[personaKey]) {
+      setCurrentUser(personas[personaKey]);
+      setActivePersona(personaKey);
+    }
+  };
+
+  const getAvailablePersonas = () => {
+    return Object.keys(personas).map(key => ({
+      key,
+      name: personas[key].name,
+      role: personas[key].role,
+      avatar: personas[key].avatar,
+      profileImage: personas[key].profileImage,
+    }));
+  };
+
   const hasPermission = (permission) => {
     return currentUser?.permissions?.includes(permission) || false;
   };
@@ -70,10 +129,13 @@ export const UserProvider = ({ children }) => {
 
   const value = {
     currentUser,
+    activePersona,
     isLoggedIn,
     login,
     logout,
     updateProfile,
+    switchPersona,
+    getAvailablePersonas,
     hasPermission,
     hasClientAccess,
   };

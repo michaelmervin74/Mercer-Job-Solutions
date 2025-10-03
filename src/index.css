@@ -35,7 +35,7 @@ button, input, select, textarea {
   font-weight: 400;
 }
 
-/* Chatbot animations */
+/* AI-Driven Animations */
 @keyframes pulse {
   0%, 100% {
     opacity: 1;
@@ -43,6 +43,107 @@ button, input, select, textarea {
   50% {
     opacity: 0.3;
   }
+}
+
+@keyframes aiGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(96, 165, 250, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(96, 165, 250, 0.6);
+  }
+}
+
+@keyframes dataFlow {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes neuralPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes circuitFlow {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+@keyframes aiScan {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+/* AI-Enhanced Elements */
+.ai-glow {
+  animation: aiGlow 3s ease-in-out infinite;
+}
+
+.ai-pulse {
+  animation: neuralPulse 2s ease-in-out infinite;
+}
+
+.ai-scan {
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-scan::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #60a5fa, transparent);
+  animation: aiScan 3s linear infinite;
+}
+
+/* AI Grid Pattern */
+.ai-grid {
+  background-image: 
+    linear-gradient(rgba(96, 165, 250, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(96, 165, 250, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* AI Circuit Pattern */
+.ai-circuit {
+  background: linear-gradient(45deg, 
+    rgba(96, 165, 250, 0.1) 0%, 
+    transparent 25%, 
+    transparent 75%, 
+    rgba(96, 165, 250, 0.1) 100%);
+  background-size: 40px 40px;
+  animation: circuitFlow 10s linear infinite;
 }
 
 /* Mercer Brand Colors - Updated Palette */

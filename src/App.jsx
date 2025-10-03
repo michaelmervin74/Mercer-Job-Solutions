@@ -46,6 +46,20 @@ import {
   Settings,
   MoreHorizontal,
   ExternalLink,
+  Cpu,
+  Database,
+  Network,
+  Layers,
+  GitBranch,
+  Sparkles,
+  Bot,
+  CircuitBoard,
+  Hexagon,
+  Atom,
+  Binary,
+  Code,
+  Terminal,
+  Workflow,
 } from "lucide-react";
 import JobBenchmarking from "./components/JobBenchmarking";
 import CompensationIntelligence from "./components/CompensationIntelligence";
@@ -60,7 +74,7 @@ const AppContent = () => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const { currentClient, clients, setSelectedClient } = useClient();
-  const { currentUser, logout } = useUser();
+  const { currentUser, logout, switchPersona, getAvailablePersonas } = useUser();
   const userMenuRef = useRef(null);
   const notificationRef = useRef(null);
 
@@ -129,14 +143,33 @@ const AppContent = () => {
           "'Source Sans Pro', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif",
       }}
     >
-      {/* Header */}
+      {/* AI-Enhanced Header */}
       <header
         style={{
-          backgroundColor: "#012d78",
-          boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-          borderBottom: "1px solid #1e40af",
+          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.15)",
+          borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+          position: "relative",
+          overflow: "hidden",
+          zIndex: 100,
         }}
       >
+        {/* AI Background Pattern */}
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: `
+              radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 40% 80%, rgba(120, 119, 198, 0.2) 0%, transparent 50%)
+            `,
+            animation: "pulse 4s ease-in-out infinite",
+          }}
+        />
         <div
           style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 1rem" }}
         >
@@ -187,6 +220,33 @@ const AppContent = () => {
                       objectFit: "contain",
                     }}
                   />
+                  <div
+                    style={{
+                      marginLeft: "12px",
+                      color: "white",
+                    }}
+                  >
+                    <h1
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "bold",
+                        margin: 0,
+                        lineHeight: 1.2,
+                      }}
+                    >
+                      Job Solutions
+                    </h1>
+                    <p
+                      style={{
+                        fontSize: "12px",
+                        margin: 0,
+                        opacity: 0.8,
+                        lineHeight: 1.2,
+                      }}
+                    >
+                      AI-Powered HR Intelligence
+                    </p>
+                  </div>
                   {/* <h1
                     style={{
                       fontSize: "28px",
@@ -521,127 +581,167 @@ const AppContent = () => {
                 </select>
               </div>
 
-              {/* User Profile - Prominent Display */}
-              <div
-                onClick={() => setShowUserMenu(!showUserMenu)}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.75rem",
-                  padding: "0.25rem 1rem",
-                  backgroundColor: "rgba(255, 255, 255, 0.1)",
-                  borderRadius: "8px",
-                  border: "1px solid rgba(255, 255, 255, 0.2)",
-                  cursor: "pointer",
-                  transition: "all 0.2s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
-                  e.target.style.borderColor = "rgba(255, 255, 255, 0.3)";
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
-                  e.target.style.borderColor = "rgba(255, 255, 255, 0.2)";
-                }}
-              >
+              {/* User Profile Section */}
+              <div ref={userMenuRef} style={{ position: "relative", display: "inline-block" }}>
+                {/* User Profile - Prominent Display */}
                 <div
+                  onClick={() => setShowUserMenu(!showUserMenu)}
                   style={{
-                    width: "36px",
-                    height: "36px",
-                    borderRadius: "50%",
-                    backgroundImage: `url('/profile-image.jfif')`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    border: "2px solid rgba(255, 255, 255, 0.3)",
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "center",
-                    color: "white",
-                    fontWeight: "bold",
-                    fontSize: "14px",
-                    position: "relative",
+                    gap: "0.75rem",
+                    padding: "0.25rem 1rem",
+                    backgroundColor: "rgba(255, 255, 255, 0.1)",
+                    borderRadius: "8px",
+                    border: "1px solid rgba(255, 255, 255, 0.2)",
+                    cursor: "pointer",
+                    transition: "all 0.2s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
+                    e.target.style.borderColor = "rgba(255, 255, 255, 0.3)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
+                    e.target.style.borderColor = "rgba(255, 255, 255, 0.2)";
                   }}
                 >
-                  {/* Fallback initials if image fails to load */}
                   <div
                     style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
+                      width: "36px",
+                      height: "36px",
                       borderRadius: "50%",
-                      backgroundColor: "#2c5aa0",
+                      backgroundImage: `url('${currentUser.profileImage}')`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      border: "2px solid rgba(255, 255, 255, 0.3)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      fontSize: "12px",
-                      fontWeight: "600",
                       color: "white",
-                      opacity: 0,
-                      transition: "opacity 0.3s ease",
-                    }}
-                    onError={(e) => (e.target.style.opacity = 1)}
-                  >
-                    {currentUser?.name
-                      ?.split(" ")
-                      .map((n) => n[0])
-                      .join("") || "SC"}
-                  </div>
-                </div>
-                <div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.5rem",
+                      fontWeight: "bold",
+                      fontSize: "14px",
+                      position: "relative",
+                      overflow: "hidden",
                     }}
                   >
-                    <p
-                      style={{
-                        fontSize: "14px",
-                        fontWeight: "600",
-                        color: "white",
-                        margin: 0,
-                      }}
-                    >
-                      {currentUser?.name || "Sarah Chen"}
-                    </p>
+                    {/* Fallback initials if image fails to load */}
                     <div
                       style={{
-                        width: "8px",
-                        height: "8px",
-                        backgroundColor: "#10b981",
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
                         borderRadius: "50%",
+                        backgroundColor: "#4a90e2",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "12px",
+                        fontWeight: "600",
+                        color: "white",
+                        opacity: 0,
+                        transition: "opacity 0.3s ease",
                       }}
-                    ></div>
+                      onError={(e) => (e.target.style.opacity = 1)}
+                    >
+                      {currentUser?.name
+                        ?.split(" ")
+                        .map((n) => n[0])
+                        .join("") || "SC"}
+                    </div>
+                    {/* Image with error handling */}
+                    <img
+                      src={currentUser.profileImage}
+                      alt={currentUser.name}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: "50%",
+                        objectFit: "cover",
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                      }}
+                      onError={(e) => {
+                        e.target.style.display = "none";
+                        e.target.previousSibling.style.opacity = 1;
+                      }}
+                    />
                   </div>
-                  {/* <p style={{ fontSize: "12px", color: "#e2e8f0", margin: 0 }}>
-                    {currentUser?.title || "Senior HR Strategy Consultant"}
-                  </p> */}
+                  <div>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.5rem",
+                      }}
+                    >
+                      <p
+                        style={{
+                          fontSize: "14px",
+                          fontWeight: "600",
+                          color: "white",
+                          margin: 0,
+                        }}
+                      >
+                        {currentUser?.name || "Sarah Chen"}
+                      </p>
+                      <div
+                        style={{
+                          width: "8px",
+                          height: "8px",
+                          backgroundColor: "#10b981",
+                          borderRadius: "50%",
+                        }}
+                      ></div>
+                    </div>
+                    {/* <p style={{ fontSize: "12px", color: "#e2e8f0", margin: 0 }}>
+                      {currentUser?.title || "Senior HR Strategy Consultant"}
+                    </p> */}
+                  </div>
+                  <ChevronDown 
+                    size={16} 
+                    style={{ 
+                      color: "white",
+                      transform: showUserMenu ? "rotate(180deg)" : "rotate(0deg)",
+                      transition: "transform 0.2s ease",
+                    }} 
+                  />
                 </div>
-                <ChevronDown size={16} style={{ color: "white" }} />
-              </div>
-
-              {/* User Profile Section */}
-              <div ref={userMenuRef} style={{ position: "relative" }}>
                 {/* User Dropdown Menu */}
                 {showUserMenu && (
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: "100%",
-                      right: 0,
-                      marginTop: "0.5rem",
-                      backgroundColor: "white",
-                      borderRadius: "12px",
-                      boxShadow:
-                        "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
-                      border: "1px solid #e2e8f0",
-                      minWidth: "280px",
-                      zIndex: 1000,
-                    }}
-                  >
+                  <>
+                    {/* Backdrop Overlay */}
+                    <div
+                      style={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: "rgba(0, 0, 0, 0.1)",
+                        zIndex: 999998,
+                      }}
+                      onClick={() => setShowUserMenu(false)}
+                    />
+                    {/* Dropdown Menu */}
+                    <div
+                      style={{
+                        position: "fixed",
+                        top: "80px",
+                        right: "20px",
+                        backgroundColor: "white",
+                        borderRadius: "12px",
+                        boxShadow:
+                          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                        border: "2px solid #4a90e2",
+                        width: "280px",
+                        zIndex: 999999,
+                        backdropFilter: "blur(10px)",
+                      }}
+                    >
                     {/* User Info Header */}
                     <div
                       style={{
@@ -662,9 +762,6 @@ const AppContent = () => {
                             width: "48px",
                             height: "48px",
                             borderRadius: "50%",
-                            backgroundImage: `url('https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&q=80')`,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
                             border: "3px solid #4a90e2",
                             display: "flex",
                             alignItems: "center",
@@ -673,8 +770,27 @@ const AppContent = () => {
                             fontWeight: "bold",
                             fontSize: "18px",
                             position: "relative",
+                            overflow: "hidden",
                           }}
                         >
+                          {/* Image with error handling */}
+                          <img
+                            src={currentUser.profileImage}
+                            alt={currentUser.name}
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              borderRadius: "50%",
+                              objectFit: "cover",
+                              position: "absolute",
+                              top: 0,
+                              left: 0,
+                            }}
+                            onError={(e) => {
+                              e.target.style.display = "none";
+                              e.target.nextSibling.style.opacity = 1;
+                            }}
+                          />
                           {/* Fallback initials if image fails to load */}
                           <div
                             style={{
@@ -694,7 +810,6 @@ const AppContent = () => {
                               opacity: 0,
                               transition: "opacity 0.3s ease",
                             }}
-                            onError={(e) => (e.target.style.opacity = 1)}
                           >
                             {currentUser?.name
                               ?.split(" ")
@@ -817,6 +932,106 @@ const AppContent = () => {
                       </div>
                     </div>
 
+                    {/* Persona Switcher */}
+                    <div
+                      style={{
+                        padding: "1rem",
+                        borderBottom: "1px solid #e2e8f0",
+                      }}
+                    >
+                      <h4
+                        style={{
+                          fontSize: "14px",
+                          fontWeight: "600",
+                          color: "#1e293b",
+                          marginBottom: "0.5rem",
+                        }}
+                      >
+                        Switch Persona
+                      </h4>
+                      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                        {getAvailablePersonas().map((persona) => (
+                          <button
+                            key={persona.key}
+                            onClick={() => {
+                              switchPersona(persona.key);
+                              setShowUserMenu(false);
+                            }}
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "0.5rem",
+                              padding: "0.5rem",
+                              backgroundColor: currentUser.name === persona.name ? "#e0f2fe" : "transparent",
+                              border: currentUser.name === persona.name ? "1px solid #4a90e2" : "1px solid #e2e8f0",
+                              borderRadius: "6px",
+                              fontSize: "12px",
+                              color: "#374151",
+                              cursor: "pointer",
+                              transition: "all 0.2s ease",
+                            }}
+                            onMouseEnter={(e) => {
+                              if (currentUser.name !== persona.name) {
+                                e.target.style.backgroundColor = "#f8fafc";
+                              }
+                            }}
+                            onMouseLeave={(e) => {
+                              if (currentUser.name !== persona.name) {
+                                e.target.style.backgroundColor = "transparent";
+                              }
+                            }}
+                          >
+                            <div
+                              style={{
+                                width: "24px",
+                                height: "24px",
+                                borderRadius: "50%",
+                                backgroundImage: `url('${persona.profileImage}')`,
+                                backgroundSize: "cover",
+                                backgroundPosition: "center",
+                                border: "1px solid #4a90e2",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                position: "relative",
+                              }}
+                            >
+                              {/* Fallback initials if image fails to load */}
+                              <div
+                                style={{
+                                  position: "absolute",
+                                  top: 0,
+                                  left: 0,
+                                  width: "100%",
+                                  height: "100%",
+                                  borderRadius: "50%",
+                                  backgroundColor: "#4a90e2",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  fontSize: "10px",
+                                  fontWeight: "bold",
+                                  color: "white",
+                                  opacity: 0,
+                                  transition: "opacity 0.3s ease",
+                                }}
+                                onError={(e) => (e.target.style.opacity = 1)}
+                              >
+                                {persona.avatar}
+                              </div>
+                            </div>
+                            <div style={{ textAlign: "left" }}>
+                              <div style={{ fontWeight: "500" }}>{persona.name}</div>
+                              <div style={{ fontSize: "10px", color: "#6b7280" }}>{persona.role}</div>
+                            </div>
+                            {currentUser.name === persona.name && (
+                              <div style={{ marginLeft: "auto", color: "#4a90e2" }}>✓</div>
+                            )}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
                     {/* Actions */}
                     <div style={{ padding: "0.5rem" }}>
                       <button
@@ -899,6 +1114,7 @@ const AppContent = () => {
                       </button>
                     </div>
                   </div>
+                  </>
                 )}
               </div>
 
@@ -913,6 +1129,8 @@ const AppContent = () => {
         style={{
           backgroundColor: "#1e40af",
           borderBottom: "1px solid #1e3a8a",
+          position: "relative",
+          zIndex: 50,
         }}
       >
         <div
@@ -956,15 +1174,45 @@ const AppContent = () => {
         </div>
       </nav>
 
-      {/* Main Content */}
+      {/* AI-Enhanced Main Content */}
       <main
-        style={{ maxWidth: "1200px", margin: "0 auto", padding: "2rem 1rem" }}
+        style={{ 
+          maxWidth: activeTab === "chatbot" ? "100%" : "1200px", 
+          margin: "0 auto", 
+          padding: activeTab === "chatbot" ? "0" : "2rem 1rem",
+          height: activeTab === "chatbot" ? "calc(100vh - 80px)" : "auto",
+          background: activeTab === "chatbot" ? "transparent" : "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)",
+          position: "relative",
+        }}
       >
+        {/* AI Background Pattern for non-chatbot pages */}
+        {activeTab !== "chatbot" && (
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: `
+                radial-gradient(circle at 10% 20%, rgba(96, 165, 250, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.03) 0%, transparent 50%)
+              `,
+              pointerEvents: "none",
+            }}
+          />
+        )}
         <motion.div
           key={activeTab}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
+          style={{ 
+            height: activeTab === "chatbot" ? "100%" : "auto",
+            position: "relative",
+            zIndex: 1,
+          }}
         >
           {renderContent()}
         </motion.div>
@@ -982,6 +1230,16 @@ const Chatbot = () => {
   const [selectedPrompt, setSelectedPrompt] = useState(null);
   const [conversationHistory, setConversationHistory] = useState([]);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
+  const [activeFilters, setActiveFilters] = useState([]);
+  const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
+  const [conversationMode, setConversationMode] = useState("assistant"); // assistant, analysis, creative
+  const [followUpQuestions, setFollowUpQuestions] = useState([]);
+  const [userPreferences, setUserPreferences] = useState({
+    detailLevel: "comprehensive",
+    responseStyle: "professional",
+    includeCharts: true,
+    includeActionItems: true
+  });
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -995,84 +1253,147 @@ const Chatbot = () => {
   // Initialize with welcome message
   useEffect(() => {
     if (messages.length === 0) {
-      const welcomeMessage = {
-        id: Date.now(),
-        text: `Hello ${currentUser.name}! I'm your AI HR Strategy Assistant powered by Mercer's global expertise. I can help you with:
+      let welcomeText = `Hello ${currentUser.name}! I'm your AI HR Strategy Assistant powered by Mercer's global expertise.`;
+      
+      if (currentUser.name === "James Patel") {
+        welcomeText += ` As a Senior Compensation Analyst, I'm here to help you with:
+
+• **Compensation Benchmarking**: Market data analysis, salary surveys, and role comparisons
+• **Pay Architecture**: Grade structures, salary bands, and geographic differentials
+• **Annual Planning**: Merit budgets, bonus pools, and equity allocation strategies
+• **Specialized Projects**: Sales comp design, M&A due diligence, and scenario modeling
+
+I can access real-time data from Mercer's proprietary database across 156 countries and 25+ industries.`;
+      } else {
+        welcomeText += ` I can help you with:
 
 • **Strategic Planning**: Workforce planning, organizational design, and succession strategies
 • **Compensation Analysis**: Market data, salary benchmarking, and total rewards optimization
 • **Talent Management**: Skills gap analysis, training recommendations, and career frameworks
-• **Data & Insights**: Real-time analytics from 156 countries and 25+ industries
+• **Data & Insights**: Real-time analytics from 156 countries and 25+ industries`;
+      }
+      
+      welcomeText += `
 
-I'm currently analyzing data for ${currentClient.name} in the ${currentClient.industry} sector. How can I assist you today?`,
+I'm currently analyzing data for ${currentClient.name} in the ${currentClient.industry} sector. How can I assist you today?`;
+
+      const welcomeMessage = {
+        id: Date.now(),
+        text: welcomeText,
         sender: "bot",
         timestamp: new Date(),
         type: "welcome",
       };
       setMessages([welcomeMessage]);
     }
-  }, []);
+  }, [currentUser.name, currentClient.name, currentClient.industry]);
 
   const suggestedPrompts = [
     {
       id: 1,
+      title: "🎯 VP Commercial Compensation Benchmark (Demo Script)",
+      prompt: "Find the current compensation range for a Vice President of Commercial roles in the Consumer Packaged Goods industry.",
+      category: "Demo Script",
+      complexity: "Interactive Demo",
+      persona: "james",
+      personalization: "Complete interactive demo workflow",
+      estimatedTime: "2-3 minutes",
+      confidence: "High",
+      isDemo: true,
+    },
+    {
+      id: 2,
+      title: "Pay Architecture & Salary Structures",
+      prompt: "Help me design a comprehensive pay architecture with 8-10 grades, including minimums, midpoints, and maximums for our engineering organization. Include geographic differentials for distributed teams.",
+      category: "Compensation",
+      complexity: "Advanced",
+      persona: "james",
+      personalization: "Tailored to your engineering focus areas",
+      estimatedTime: "5-7 minutes",
+      confidence: "High",
+    },
+    {
+      id: 3,
+      title: "Annual Comp Planning & Budgeting",
+      prompt: "Model different merit budget scenarios (2.5%, 3.0%, 3.5%) and their impact on our $45M compensation budget. Include bonus pool recommendations and equity allocation strategies.",
+      category: "Compensation",
+      complexity: "Advanced",
+      persona: "james",
+      personalization: "Using your preferred modeling approach",
+      estimatedTime: "4-6 minutes",
+      confidence: "High",
+    },
+    {
+      id: 4,
+      title: "Sales Compensation Design",
+      prompt: "Design a sales compensation plan for our commercial team with base salary, commission structure, and accelerators. Include quota setting methodology and territory optimization.",
+      category: "Compensation",
+      complexity: "Advanced",
+      persona: "james",
+      personalization: "Based on your sales comp expertise",
+      estimatedTime: "6-8 minutes",
+      confidence: "High",
+    },
+    {
+      id: 5,
+      title: "M&A Due Diligence Analysis",
+      prompt: "Analyze compensation programs for our target acquisition, identifying risks, gaps, and harmonization challenges. Provide integration timeline and cost projections.",
+      category: "Compensation",
+      complexity: "Strategic",
+      persona: "james",
+      personalization: "Leveraging your M&A experience",
+      estimatedTime: "8-10 minutes",
+      confidence: "Medium",
+    },
+    {
+      id: 6,
       title: "Executive Compensation Strategy",
       prompt: `Analyze executive compensation trends for ${currentClient.industry} industry leaders. Provide a comprehensive report including base salary, bonus structures, equity packages, and long-term incentives aligned with market benchmarks.`,
       category: "Compensation",
       complexity: "Advanced",
+      personalization: `Customized for ${currentClient.name}'s industry position`,
+      estimatedTime: "5-7 minutes",
+      confidence: "High",
     },
     {
-      id: 2,
+      id: 7,
       title: "AI/ML Skills Gap Analysis",
       prompt: `Conduct a detailed skills gap analysis for AI and Machine Learning capabilities across our ${currentClient.employees.toLocaleString()}-person workforce. Include current state assessment, future needs projection, and training roadmap with ROI calculations.`,
       category: "Skills",
       complexity: "Advanced",
+      personalization: `Scaled for ${currentClient.name}'s workforce size`,
+      estimatedTime: "7-10 minutes",
+      confidence: "High",
     },
     {
-      id: 3,
+      id: 8,
       title: "Global Workforce Planning",
       prompt: `Develop a 3-year global workforce planning strategy for ${currentClient.name}, considering regional market conditions, talent availability, cost optimization, and expansion into emerging markets.`,
       category: "Planning",
       complexity: "Strategic",
+      personalization: `Aligned with ${currentClient.name}'s growth trajectory`,
+      estimatedTime: "10-15 minutes",
+      confidence: "Medium",
     },
     {
-      id: 4,
-      title: "Diversity & Inclusion Metrics",
-      prompt:
-        "Analyze our current D&I metrics, benchmark against industry standards, and create a comprehensive action plan to improve representation across all organizational levels with measurable KPIs.",
-      category: "D&I",
-      complexity: "Strategic",
-    },
-    {
-      id: 5,
-      title: "Total Rewards Optimization",
-      prompt:
-        "Design an optimized total rewards package that balances competitive compensation, benefits, wellness programs, and work-life balance. Include cost analysis and employee value proposition.",
-      category: "Rewards",
-      complexity: "Advanced",
-    },
-    {
-      id: 6,
-      title: "Remote Work Policy",
-      prompt:
-        "Create a comprehensive remote work policy framework including compensation adjustments for different geographic locations, productivity metrics, and collaboration tools recommendations.",
-      category: "Policy",
-      complexity: "Intermediate",
-    },
-    {
-      id: 7,
-      title: "Succession Planning",
-      prompt:
-        "Develop a robust succession planning framework for critical leadership positions, including identification criteria, development programs, and timeline for implementation.",
-      category: "Leadership",
-      complexity: "Strategic",
-    },
-    {
-      id: 8,
-      title: "Market Intelligence Report",
-      prompt: `Generate a comprehensive market intelligence report for the ${currentClient.industry} sector, including salary trends, talent availability, competitive analysis, and emerging role requirements.`,
+      id: 9,
+      title: "Real-time Market Pulse Check",
+      prompt: "Give me a real-time pulse check on compensation trends in our key markets. Include recent survey updates, market movements, and competitive intelligence.",
       category: "Intelligence",
       complexity: "Advanced",
+      personalization: "Based on your active client portfolio",
+      estimatedTime: "3-4 minutes",
+      confidence: "High",
+    },
+    {
+      id: 10,
+      title: "Scenario Modeling Workshop",
+      prompt: "Walk me through different compensation scenarios for our upcoming board presentation. Include sensitivity analysis and risk assessments.",
+      category: "Strategy",
+      complexity: "Strategic",
+      personalization: "Tailored to your presentation style",
+      estimatedTime: "8-12 minutes",
+      confidence: "High",
     },
   ];
 
@@ -1103,8 +1424,423 @@ I'm currently analyzing data for ${currentClient.name} in the ${currentClient.in
     }, 1500);
   };
 
+  // Helper function to generate source citations and download options
+  const generateSourceCitations = (sources) => {
+    return `
+**📚 Sources & References:**
+${sources.map((source, index) => `
+${index + 1}. **${source.title}**
+   • **Source**: ${source.source}
+   • **Page**: ${source.page}
+   • **Date**: ${source.date}
+   • **🔗 View Document**: [${source.link}](${source.link})
+   • **📥 Downloads**: [PDF Report](${source.download}) | [Excel Data](${source.excel || source.download}) | [Word Summary](${source.download.replace('.pdf', '.docx')})
+`).join('')}
+
+**🔍 Data Verification:**
+• **Confidence Level**: ${sources[0]?.confidence || 'High'}
+• **Last Updated**: ${sources[0]?.lastUpdated || new Date().toISOString().split('T')[0]}
+• **Compliance**: SOC 2 Type II Certified | GDPR Compliant
+• **Audit Trail**: [View Full Audit Log](https://mercer.com/audit-logs) | [Export Compliance Report](https://mercer.com/compliance-reports)
+
+**📥 Quick Download Options:**
+• [📊 Full Analysis Report (PDF)](https://mercer.com/downloads/full-analysis-report.pdf)
+• [📈 Data Tables (Excel)](https://mercer.com/downloads/data-tables.xlsx)
+• [📋 Executive Summary (Word)](https://mercer.com/downloads/executive-summary.docx)
+• [🔗 Source Documents Bundle (ZIP)](https://mercer.com/downloads/source-bundle.zip)
+
+**💡 Pro Tip**: Click any link above to access the source documents directly. All links open in new tabs for your convenience.
+`;
+  };
+
   const generateAIResponse = (userMessage) => {
     const lowerMessage = userMessage.toLowerCase();
+
+    // James Patel Demo Script - VP Commercial Compensation
+    if (
+      lowerMessage.includes("vice president") && 
+      (lowerMessage.includes("commercial") || lowerMessage.includes("cpg") || lowerMessage.includes("consumer packaged goods"))
+    ) {
+      return `**🎯 VP Commercial Compensation Benchmark - CPG Industry**
+
+**James Uses AI to Benchmark a VP Role**
+
+Got it. To return the most relevant results, I need a bit more detail.
+• What geography or market are you targeting?
+• Do you have a company revenue range in mind?
+
+**Suggested Filters:**
+• **Geography**: US National, Regional, or specific states?
+• **Company Size**: Revenue bands (e.g., $1B-$5B, $5B-$10B, $10B+)
+• **Industry Sub-segment**: Food & Beverage, Personal Care, Household Products?
+
+*💡  Tip**: Try responding with "United States. Target company size is mid to large—$1B to $5B in revenue." to see the full interactive flow.*`;
+    }
+
+    // James Patel Demo Script - Follow-up with filters
+    if (
+      lowerMessage.includes("united states") && 
+      (lowerMessage.includes("1b") || lowerMessage.includes("5b") || lowerMessage.includes("revenue"))
+    ) {
+      const sources = [
+        {
+          title: "Mercer Global Compensation Survey - CPG Industry",
+          source: "Mercer Total Rewards Database",
+          page: "Section 4.2, Pages 127-134",
+          date: "Q1 2025",
+          link: "https://mercer.com/surveys/global-compensation-cpg-2025",
+          download: "https://mercer.com/downloads/cpg-comp-survey-2025.pdf",
+          excel: "https://mercer.com/downloads/cpg-comp-survey-2025.xlsx",
+          confidence: "High",
+          lastUpdated: "2025-01-15"
+        },
+        {
+          title: "VP Commercial Roles Benchmarking Report",
+          source: "Mercer Executive Compensation Database",
+          page: "Appendix B, Pages 245-251",
+          date: "Q1 2025",
+          link: "https://mercer.com/reports/vp-commercial-benchmark-2025",
+          download: "https://mercer.com/downloads/vp-commercial-benchmark-2025.pdf",
+          confidence: "High",
+          lastUpdated: "2025-01-10"
+        }
+      ];
+
+      return `**📊 VP Commercial Compensation Results - CPG Industry**
+
+Thanks. Based on those filters, I found 7 strong matches from the most recent Mercer survey.
+
+**Match Details:**
+• **Titles**: VP, Commercial / Sales Strategy / Business Development
+• **Industry**: CPG
+• **Geography**: U.S. National
+• **Revenue Band**: $1B–$5B
+• **Data Source**: Q1 Survey, 2025
+• **Sample Size**: 7 organizations
+• **Confidence Level**: High (95% confidence interval)
+
+**Next Step**: Would you like to see Base Salary, Total Direct Compensation, or both?
+
+*💡  Tip**: Try responding with "Total compensation, please." to continue the interactive flow.*
+
+${generateSourceCitations(sources)}`;
+    }
+
+    // James Patel Demo Script - Total Compensation Results
+    if (
+      lowerMessage.includes("total compensation") || 
+      lowerMessage.includes("total comp")
+    ) {
+      const sources = [
+        {
+          title: "VP Commercial Total Direct Compensation Analysis",
+          source: "Mercer Global Compensation Survey - CPG Industry",
+          page: "Table 4.2.3, Page 131",
+          date: "Q1 2025",
+          link: "https://mercer.com/surveys/global-compensation-cpg-2025",
+          download: "https://mercer.com/downloads/vp-commercial-tdc-analysis-2025.pdf",
+          excel: "https://mercer.com/downloads/vp-commercial-tdc-data-2025.xlsx",
+          confidence: "High",
+          lastUpdated: "2025-01-15"
+        },
+        {
+          title: "Market Movement Factors - Q1 to Q4 2025",
+          source: "Mercer Market Intelligence Report",
+          page: "Section 2.1, Pages 45-52",
+          date: "Q1 2025",
+          link: "https://mercer.com/reports/market-movement-factors-2025",
+          download: "https://mercer.com/downloads/market-movement-factors-2025.pdf",
+          confidence: "High",
+          lastUpdated: "2025-01-20"
+        }
+      ];
+
+      return `**💰 VP Commercial - Total Direct Compensation Results**
+
+Here are the results across the 7 matched records:
+
+**Compensation Ranges:**
+• **25th percentile**: $289,000
+• **Median**: $327,000
+• **75th percentile**: $373,000
+• **Average**: $335,000
+• **# of matched orgs**: 7
+• **Standard Deviation**: $42,000
+• **Confidence Interval**: ±$18,000 (95% confidence)
+
+**Statistical Notes:**
+• **Data Quality**: High (all 7 organizations provided complete TDC data)
+• **Outlier Analysis**: No significant outliers detected
+• **Market Positioning**: Median represents 50th percentile market position
+
+**Next Step**: This data is based on Q1 reporting. Do you want to age this data forward to Q4 using a 6% market movement factor?
+
+*💡  Tip**: Try responding with "Yes, age the data." to see the market adjustment process.*
+
+${generateSourceCitations(sources)}`;
+    }
+
+    // James Patel Demo Script - Data Aging
+    if (
+      lowerMessage.includes("age the data") || 
+      lowerMessage.includes("yes, age") ||
+      lowerMessage.includes("6%")
+    ) {
+      const sources = [
+        {
+          title: "Aged VP Commercial Compensation Data - Q4 2025",
+          source: "Mercer Global Compensation Survey - CPG Industry (Aged)",
+          page: "Table 4.2.3 (Aged), Page 131",
+          date: "Q4 2025 (Projected)",
+          link: "https://mercer.com/surveys/global-compensation-cpg-2025-aged",
+          download: "https://mercer.com/downloads/vp-commercial-aged-data-2025.pdf",
+          excel: "https://mercer.com/downloads/vp-commercial-aged-data-2025.xlsx",
+          confidence: "High",
+          lastUpdated: "2025-01-20"
+        },
+        {
+          title: "Market Movement Factor Application",
+          source: "Mercer Market Intelligence Report - Aging Methodology",
+          page: "Section 2.1.3, Pages 48-50",
+          date: "Q1 2025",
+          link: "https://mercer.com/reports/aging-methodology-2025",
+          download: "https://mercer.com/downloads/aging-methodology-2025.pdf",
+          confidence: "High",
+          lastUpdated: "2025-01-20"
+        }
+      ];
+
+      return `**📈 VP Commercial - Aged Compensation Data**
+
+Adjusted for 6% market movement:
+
+**Updated Compensation Ranges:**
+• **25th percentile**: $306,340 (aged from $289,000)
+• **Median**: $347,620 (aged from $327,000)
+• **75th percentile**: $395,380 (aged from $373,000)
+• **Average**: $355,100 (aged from $335,000)
+• **Standard Deviation**: $44,520 (aged from $42,000)
+
+**Aging Methodology:**
+• **Base Period**: Q1 2025
+• **Target Period**: Q4 2025
+• **Movement Factor**: 6.0% (CPG industry average)
+• **Confidence Level**: High (based on 12-month trend analysis)
+• **Validation**: Cross-referenced with 3 independent market sources
+
+**Next Step**: Would you like this exported to Excel, summarized for Sarah, or saved to the current client workspace?
+
+*💡  Tip**: Try responding with "Summarize this for Sarah and attach the aged comp data in Excel." to complete the workflow.*
+
+**Quality Assurance:**
+• **Data Integrity**: Verified against original survey responses
+• **Outlier Check**: No anomalies detected in aged calculations
+• **Peer Review**: Methodology validated by senior compensation analysts
+
+${generateSourceCitations(sources)}`;
+    }
+
+    // James Patel Demo Script - Final Summary
+    if (
+      lowerMessage.includes("summarize") && 
+      (lowerMessage.includes("sarah") || lowerMessage.includes("excel"))
+    ) {
+      const sources = [
+        {
+          title: "VP Commercial CPG Compensation Analysis - Executive Summary",
+          source: "Mercer Job Solutions AI Assistant",
+          page: "Complete Analysis Report",
+          date: new Date().toISOString().split('T')[0],
+          link: "https://mercer.com/reports/vp-commercial-cpg-summary-2025",
+          download: "https://mercer.com/downloads/vp-commercial-cpg-summary-2025.pdf",
+          excel: "https://mercer.com/downloads/vp-commercial-cpg-data-2025.xlsx",
+          confidence: "High",
+          lastUpdated: new Date().toISOString().split('T')[0]
+        },
+        {
+          title: "Client Workspace: Microsoft APAC - Role Analysis",
+          source: "Mercer Client Portal",
+          page: "VP Commercial – CPG Analysis Folder",
+          date: new Date().toISOString().split('T')[0],
+          link: "https://mercer.com/client-workspace/microsoft-apac/role-analysis",
+          download: "https://mercer.com/downloads/microsoft-apac-vp-commercial-analysis.pdf",
+          confidence: "High",
+          lastUpdated: new Date().toISOString().split('T')[0]
+        }
+      ];
+
+      return `**🎉 Demo Complete - Summary Created & File Exported**
+
+✅ **Summary created for Sarah Chen**
+✅ **File exported to Excel with aged compensation data**
+✅ **Saved to client workspace with full audit trail**
+
+**File Location**: Microsoft – APAC > Role Analysis > VP Commercial – CPG
+
+**Key Findings:**
+• VP Commercial roles in CPG (US, $1B-$5B revenue) show median TDC of $347,620
+• Data aged forward 6% from Q1 2025 baseline
+• 7 strong market matches with high confidence level
+• Ready for client presentation and decision-making
+
+   
+
+**Deliverables Created:**
+• **Executive Summary**: 2-page overview for Sarah Chen
+• **Detailed Analysis**: Complete compensation breakdown with methodology
+• **Excel Workbook**: Raw data with formulas and calculations
+• **Source Documentation**: All references and citations included
+• **Audit Trail**: Complete record of data sources and transformations
+
+**Compliance & Quality Assurance:**
+• **Data Governance**: All sources verified and documented
+• **Methodology**: Transparent aging calculations with validation
+• **Confidence Levels**: Statistical significance clearly indicated
+• **Audit Ready**: Full traceability for regulatory compliance
+
+*In less than two minutes, you were able to retrieve, filter, adjust, and deliver benchmark compensation data—all with complete source traceability. No spreadsheet hunting. No second-guessing data age or relevance.*
+
+${generateSourceCitations(sources)}`;
+    }
+
+    // James Patel - Pay Architecture & Salary Structures
+    if (
+      lowerMessage.includes("pay architecture") || 
+      lowerMessage.includes("salary structures") ||
+      lowerMessage.includes("grades") ||
+      lowerMessage.includes("minimums") ||
+      lowerMessage.includes("midpoints")
+    ) {
+      const sources = [
+        {
+          title: "Engineering Pay Architecture Design Guide",
+          source: "Mercer Global Engineering Compensation Survey 2025",
+          page: "Chapter 3, Pages 89-127",
+          date: "Q1 2025",
+          link: "https://mercer.com/surveys/engineering-compensation-2025",
+          download: "https://mercer.com/downloads/engineering-pay-architecture-2025.pdf",
+          excel: "https://mercer.com/downloads/engineering-grade-structures-2025.xlsx",
+          confidence: "High",
+          lastUpdated: "2025-01-15"
+        },
+        {
+          title: "Geographic Differential Analysis - Technology Sector",
+          source: "Mercer Geographic Pay Differentials Report",
+          page: "Section 4.2, Pages 156-178",
+          date: "Q1 2025",
+          link: "https://mercer.com/reports/geo-differentials-tech-2025",
+          download: "https://mercer.com/downloads/geo-differentials-tech-2025.pdf",
+          confidence: "High",
+          lastUpdated: "2025-01-10"
+        },
+        {
+          title: "Pay Grade Design Best Practices",
+          source: "Mercer Compensation Design Methodology",
+          page: "Appendix A, Pages 234-251",
+          date: "Q1 2025",
+          link: "https://mercer.com/methodology/pay-grade-design",
+          download: "https://mercer.com/downloads/pay-grade-design-methodology.pdf",
+          confidence: "High",
+          lastUpdated: "2025-01-05"
+        }
+      ];
+
+      return `**Pay Architecture & Salary Structures Design**
+
+I'll help you design a comprehensive pay architecture for your engineering organization.
+
+**Recommended Grade Structure (8-10 grades):**
+
+**Grade 1-2: Individual Contributors (Entry-Mid)**
+• **Grade 1**: $65K - $85K - $105K (Min-Mid-Max)
+• **Grade 2**: $80K - $105K - $130K
+
+**Grade 3-4: Senior Individual Contributors**
+• **Grade 3**: $100K - $130K - $160K
+• **Grade 4**: $125K - $160K - $195K
+
+**Grade 5-6: Staff/Principal Engineers**
+• **Grade 5**: $150K - $195K - $240K
+• **Grade 6**: $180K - $235K - $290K
+
+**Grade 7-8: Senior Staff/Architects**
+• **Grade 7**: $220K - $285K - $350K
+• **Grade 8**: $260K - $340K - $420K
+
+**Geographic Differentials:**
+• **San Francisco Bay Area**: +15%
+• **New York/Seattle**: +10%
+• **Austin/Denver**: +5%
+• **Remote (US)**: Base rate
+• **International**: -10% to +5% (varies by market)
+
+**Key Design Principles:**
+✓ **Overlap**: 15-20% between adjacent grades
+✓ **Progression**: 20-25% midpoint increases
+✓ **Market Positioning**: 50th-75th percentile
+✓ **Internal Equity**: Consistent progression curves
+
+**Methodology Notes:**
+• **Market Data**: Based on 2,847 engineering roles across 156 organizations
+• **Grade Count**: Optimized for 8-10 grades to balance granularity and simplicity
+• **Progression Logic**: Mathematical progression ensuring internal equity
+• **Geographic Factors**: Updated quarterly based on cost-of-living indices
+
+Would you like me to model the financial impact of this structure or adjust any specific parameters?
+
+${generateSourceCitations(sources)}`;
+    }
+
+    // James Patel - Annual Comp Planning & Budgeting
+    if (
+      lowerMessage.includes("merit budget") || 
+      lowerMessage.includes("annual comp planning") ||
+      lowerMessage.includes("budget scenarios")
+    ) {
+      return `**Annual Compensation Planning & Budgeting Analysis**
+
+**Merit Budget Scenarios for $45M Compensation Budget:**
+
+**Scenario 1: Conservative (2.5% Merit)**
+• **Merit Pool**: $1.125M
+• **Bonus Pool**: $4.5M (10% of base)
+• **Equity Allocation**: $2.25M (5% of base)
+• **Total Investment**: $7.875M
+• **Budget Impact**: 17.5% increase
+
+**Scenario 2: Market Competitive (3.0% Merit)**
+• **Merit Pool**: $1.35M
+• **Bonus Pool**: $5.4M (12% of base)
+• **Equity Allocation**: $2.7M (6% of base)
+• **Total Investment**: $9.45M
+• **Budget Impact**: 21% increase
+
+**Scenario 3: Aggressive (3.5% Merit)**
+• **Merit Pool**: $1.575M
+• **Bonus Pool**: $6.3M (14% of base)
+• **Equity Allocation**: $3.15M (7% of base)
+• **Total Investment**: $11.025M
+• **Budget Impact**: 24.5% increase
+
+**Recommended Allocation Strategy:**
+• **Top Performers**: 4.5-5.0% increases
+• **Meets Expectations**: 2.5-3.0% increases
+• **Below Expectations**: 0-1.5% increases
+• **Promotions**: Additional 8-12% on top of merit
+
+**Equity Pool Distribution:**
+• **Senior Leadership**: 40% of equity pool
+• **Key Individual Contributors**: 35%
+• **High Potentials**: 25%
+
+**Risk Mitigation:**
+✓ **Performance Calibration**: Ensure merit aligns with performance
+✓ **Market Adjustments**: Address critical role compression
+✓ **Retention Bonuses**: Targeted retention for key talent
+✓ **Phased Implementation**: Q1 merit, Q2-Q4 equity grants
+
+Which scenario aligns best with your strategic priorities and budget constraints?`;
+    }
 
     // Executive Compensation
     if (
@@ -1444,45 +2180,142 @@ How can I assist with your specific HR strategy needs? Please provide more detai
   return (
     <div
       style={{
-        height: "calc(100vh - 200px)",
+        height: "100vh",
         display: "flex",
         flexDirection: "column",
+        backgroundColor: "#f8fafc",
       }}
     >
-      {/* Header */}
+      {/* Enhanced Header */}
       <div
         style={{
-          marginBottom: "2rem",
-          display: "flex",
-          alignItems: "flex-start",
-          justifyContent: "space-between",
+          padding: "1.5rem 2rem",
+          backgroundColor: "white",
+          borderBottom: "1px solid #e2e8f0",
+          boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
         }}
       >
-        <div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: "1rem",
+          }}
+        >
           <div
             style={{
               display: "flex",
               alignItems: "center",
               gap: "1rem",
-              marginBottom: "0.5rem",
             }}
           >
-            <h1
+            <div
               style={{
-                fontSize: "32px",
-                fontWeight: "bold",
-                color: "#1e293b",
-                margin: 0,
+                width: "48px",
+                height: "48px",
+                borderRadius: "50%",
+                backgroundImage: `url('${currentUser.profileImage}')`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                border: "3px solid #4a90e2",
+              }}
+            />
+            <div>
+              <h1
+                style={{
+                  fontSize: "28px",
+                  fontWeight: "bold",
+                  color: "#1e293b",
+                  margin: 0,
+                }}
+              >
+                AI HR Strategy Assistant
+              </h1>
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: "#6b7280",
+                  margin: 0,
+                }}
+              >
+                Personalized for {currentUser.name} • {currentClient.name} • {currentClient.industry}
+              </p>
+            </div>
+          </div>
+          
+          {/* Advanced Controls */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "1rem",
+            }}
+          >
+            {/* Conversation Mode Selector */}
+            <select
+              value={conversationMode}
+              onChange={(e) => setConversationMode(e.target.value)}
+              style={{
+                padding: "0.5rem 1rem",
+                border: "1px solid #d1d5db",
+                borderRadius: "8px",
+                backgroundColor: "white",
+                fontSize: "14px",
+                color: "#374151",
               }}
             >
-              AI HR Strategy Assistant
-            </h1>
+              <option value="assistant">🤖 Assistant Mode</option>
+              <option value="analysis">📊 Analysis Mode</option>
+              <option value="creative">💡 Creative Mode</option>
+            </select>
+
+            {/* Advanced Options Toggle */}
+            <button
+              onClick={() => setShowAdvancedOptions(!showAdvancedOptions)}
+              style={{
+                padding: "0.5rem 1rem",
+                backgroundColor: showAdvancedOptions ? "#4a90e2" : "white",
+                color: showAdvancedOptions ? "white" : "#4a90e2",
+                border: "1px solid #4a90e2",
+                borderRadius: "8px",
+                fontSize: "14px",
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+              }}
+            >
+              ⚙️ Advanced
+            </button>
+
+            {/* New Chat Button */}
+            <button
+              onClick={() => setShowClearConfirm(true)}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                padding: "0.5rem 1rem",
+                backgroundColor: "white",
+                color: "#6b7280",
+                border: "1px solid #e2e8f0",
+                borderRadius: "8px",
+                fontSize: "14px",
+                fontWeight: "500",
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+              }}
+            >
+              <RefreshCw size={16} />
+              New Chat
+            </button>
+
+            {/* Status Indicator */}
             <div
               style={{
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.5rem",
-                padding: "0.25rem 0.75rem",
+                padding: "0.5rem 1rem",
                 backgroundColor: "#10b981",
                 color: "white",
                 borderRadius: "20px",
@@ -1496,94 +2329,95 @@ How can I assist with your specific HR strategy needs? Please provide more detai
                   height: "8px",
                   backgroundColor: "white",
                   borderRadius: "50%",
-                  animation: "pulse 2s infinite",
                 }}
               ></div>
-              LIVE
+              <span>AI Assistant Online</span>
             </div>
           </div>
-          <p style={{ color: "#6b7280", margin: 0 }}>
-            Powered by Mercer's global expertise | Real-time insights from 156
-            countries & 15M+ data points
-          </p>
+        </div>
+
+        {/* Advanced Options Panel */}
+        {showAdvancedOptions && (
           <div
             style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "1rem",
-              marginTop: "0.75rem",
+              padding: "1rem",
+              backgroundColor: "#f8fafc",
+              borderRadius: "8px",
+              border: "1px solid #e2e8f0",
+              marginTop: "1rem",
             }}
           >
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                fontSize: "14px",
-                color: "#6b7280",
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                gap: "1rem",
               }}
             >
-              <Building size={14} />
-              <span>{currentClient.name}</span>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                fontSize: "14px",
-                color: "#6b7280",
-              }}
-            >
-              <Target size={14} />
-              <span>{currentClient.industry}</span>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                fontSize: "14px",
-                color: "#6b7280",
-              }}
-            >
-              <Users size={14} />
-              <span>{currentClient.employees.toLocaleString()} employees</span>
+              <div>
+                <label style={{ fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "0.25rem", display: "block" }}>
+                  Detail Level
+                </label>
+                <select
+                  value={userPreferences.detailLevel}
+                  onChange={(e) => setUserPreferences(prev => ({ ...prev, detailLevel: e.target.value }))}
+                  style={{
+                    width: "100%",
+                    padding: "0.5rem",
+                    border: "1px solid #d1d5db",
+                    borderRadius: "6px",
+                    fontSize: "14px",
+                  }}
+                >
+                  <option value="brief">Brief</option>
+                  <option value="standard">Standard</option>
+                  <option value="comprehensive">Comprehensive</option>
+                </select>
+              </div>
+              
+              <div>
+                <label style={{ fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "0.25rem", display: "block" }}>
+                  Response Style
+                </label>
+                <select
+                  value={userPreferences.responseStyle}
+                  onChange={(e) => setUserPreferences(prev => ({ ...prev, responseStyle: e.target.value }))}
+                  style={{
+                    width: "100%",
+                    padding: "0.5rem",
+                    border: "1px solid #d1d5db",
+                    borderRadius: "6px",
+                    fontSize: "14px",
+                  }}
+                >
+                  <option value="professional">Professional</option>
+                  <option value="conversational">Conversational</option>
+                  <option value="technical">Technical</option>
+                </select>
+              </div>
+
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <input
+                  type="checkbox"
+                  checked={userPreferences.includeCharts}
+                  onChange={(e) => setUserPreferences(prev => ({ ...prev, includeCharts: e.target.checked }))}
+                  style={{ margin: 0 }}
+                />
+                <label style={{ fontSize: "12px", color: "#374151" }}>Include Charts</label>
+              </div>
+
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <input
+                  type="checkbox"
+                  checked={userPreferences.includeActionItems}
+                  onChange={(e) => setUserPreferences(prev => ({ ...prev, includeActionItems: e.target.checked }))}
+                  style={{ margin: 0 }}
+                />
+                <label style={{ fontSize: "12px", color: "#374151" }}>Include Action Items</label>
+              </div>
             </div>
           </div>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <button
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
-              padding: "0.5rem 1rem",
-              backgroundColor: "white",
-              color: "#6b7280",
-              border: "1px solid #e2e8f0",
-              borderRadius: "8px",
-              fontSize: "14px",
-              fontWeight: "500",
-              cursor: "pointer",
-              transition: "all 0.2s ease",
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.backgroundColor = "#f8fafc";
-              e.target.style.borderColor = "#4a90e2";
-              e.target.style.color = "#4a90e2";
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.backgroundColor = "white";
-              e.target.style.borderColor = "#e2e8f0";
-              e.target.style.color = "#6b7280";
-            }}
-            onClick={() => setShowClearConfirm(true)}
-          >
-            <RefreshCw size={16} />
-            New Chat
-          </button>
-        </div>
+        )}
       </div>
 
       <div style={{ display: "flex", gap: "1.5rem", flex: 1, minHeight: 0 }}>
@@ -1612,21 +2446,32 @@ How can I assist with your specific HR strategy needs? Please provide more detai
           <div
             style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}
           >
-            {suggestedPrompts.map((prompt) => (
+            {suggestedPrompts
+              .filter((prompt) => {
+                // Show all prompts for Sarah Chen, or James-specific prompts for James Patel
+                if (currentUser.name === "James Patel") {
+                  return prompt.persona === "james" || !prompt.persona;
+                } else {
+                  return !prompt.persona || prompt.persona === "sarah";
+                }
+              })
+              .map((prompt) => (
               <div
                 key={prompt.id}
                 onClick={() => handlePromptSelect(prompt)}
                 style={{
                   padding: "1rem",
-                  backgroundColor:
-                    selectedPrompt?.id === prompt.id ? "#f1f5f9" : "#f8fafc",
-                  border:
-                    selectedPrompt?.id === prompt.id
-                      ? "1px solid #4a90e2"
-                      : "1px solid #e2e8f0",
+                  backgroundColor: prompt.isDemo 
+                    ? (selectedPrompt?.id === prompt.id ? "#fef3c7" : "#fef7cd")
+                    : (selectedPrompt?.id === prompt.id ? "#f1f5f9" : "#f8fafc"),
+                  border: prompt.isDemo
+                    ? (selectedPrompt?.id === prompt.id ? "2px solid #f59e0b" : "2px solid #fbbf24")
+                    : (selectedPrompt?.id === prompt.id ? "1px solid #4a90e2" : "1px solid #e2e8f0"),
                   borderRadius: "8px",
                   cursor: "pointer",
                   transition: "all 0.2s ease",
+                  position: "relative",
+                  boxShadow: prompt.isDemo ? "0 2px 8px rgba(251, 191, 36, 0.2)" : "none",
                 }}
                 onMouseEnter={(e) => {
                   if (selectedPrompt?.id !== prompt.id) {
@@ -1641,6 +2486,26 @@ How can I assist with your specific HR strategy needs? Please provide more detai
                   }
                 }}
               >
+                {prompt.isDemo && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "-8px",
+                      right: "-8px",
+                      backgroundColor: "#f59e0b",
+                      color: "white",
+                      fontSize: "10px",
+                      fontWeight: "700",
+                      padding: "0.25rem 0.5rem",
+                      borderRadius: "12px",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.5px",
+                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                    }}
+                  >
+                    🎯 Demo
+                  </div>
+                )}
                 <div
                   style={{
                     display: "flex",
@@ -1653,8 +2518,8 @@ How can I assist with your specific HR strategy needs? Please provide more detai
                     style={{
                       fontSize: "12px",
                       fontWeight: "600",
-                      color: "#4a90e2",
-                      backgroundColor: "#e0f2fe",
+                      color: prompt.isDemo ? "#f59e0b" : "#4a90e2",
+                      backgroundColor: prompt.isDemo ? "#fef3c7" : "#e0f2fe",
                       padding: "0.25rem 0.5rem",
                       borderRadius: "4px",
                       display: "inline-block",
@@ -2490,6 +3355,287 @@ const Surveys = () => {
 const Overview = () => {
   const { currentClient } = useClient();
   const { currentUser } = useUser();
+  const [showCustomizeWidgets, setShowCustomizeWidgets] = useState(false);
+  const [selectedWidgets, setSelectedWidgets] = useState({
+    insights: true,
+    features: true,
+    playbook: true,
+    quickActions: true,
+    userProfile: true,
+    compensationSatisfaction: true,
+    marketIntelligence: true,
+    recentActivity: true,
+    collaborativeDashboard: true,
+  });
+  const [widgetLayout, setWidgetLayout] = useState("grid"); // grid, list, compact
+  const [showCollaborativeDashboard, setShowCollaborativeDashboard] = useState(false);
+  const [activeTeamFilter, setActiveTeamFilter] = useState("all"); // all, hr, finance, operations
+  const [showSyncScheduler, setShowSyncScheduler] = useState(false);
+  const [showModularModels, setShowModularModels] = useState(false);
+  const [selectedModel, setSelectedModel] = useState(null);
+  const [modelBuilderMode, setModelBuilderMode] = useState(false);
+
+  // Available widgets for customization
+  const availableWidgets = [
+    {
+      id: "insights",
+      title: "Key Insights",
+      description: "Compensation competitiveness, retention rates, and market position",
+      icon: TrendingUp,
+      category: "Analytics",
+      size: "large",
+    },
+    {
+      id: "features",
+      title: "Core Features",
+      description: "Job benchmarking, compensation intelligence, and skills analysis",
+      icon: BarChart3,
+      category: "Tools",
+      size: "large",
+    },
+    {
+      id: "playbook",
+      title: "Mercer Playbook",
+      description: "Strategic frameworks and best practices",
+      icon: BookOpen,
+      category: "Resources",
+      size: "medium",
+    },
+    {
+      id: "quickActions",
+      title: "Quick Actions",
+      description: "Frequently used tools and shortcuts",
+      icon: Zap,
+      category: "Actions",
+      size: "medium",
+    },
+    {
+      id: "userProfile",
+      title: "User Profile",
+      description: "Personal information and specializations",
+      icon: User,
+      category: "Profile",
+      size: "small",
+    },
+    {
+      id: "compensationSatisfaction",
+      title: "Compensation Satisfaction",
+      description: "Employee feedback and satisfaction metrics",
+      icon: Star,
+      category: "Feedback",
+      size: "medium",
+    },
+    {
+      id: "marketIntelligence",
+      title: "Market Intelligence",
+      description: "Real-time market trends and competitive analysis",
+      icon: Globe,
+      category: "Intelligence",
+      size: "large",
+    },
+    {
+      id: "recentActivity",
+      title: "Recent Activity",
+      description: "Latest reports, analyses, and updates",
+      icon: Activity,
+      category: "Activity",
+      size: "medium",
+    },
+    {
+      id: "collaborativeDashboard",
+      title: "Collaborative Dashboard",
+      description: "Cross-team communication and project alignment tools",
+      icon: Users,
+      category: "Collaboration",
+      size: "large",
+    },
+    {
+      id: "modularModels",
+      title: "Modular Analysis Models",
+      description: "Customizable analysis templates for different scenarios",
+      icon: Settings,
+      category: "Analytics",
+      size: "large",
+    },
+  ];
+
+  const toggleWidget = (widgetId) => {
+    setSelectedWidgets(prev => ({
+      ...prev,
+      [widgetId]: !prev[widgetId]
+    }));
+  };
+
+  const resetToDefault = () => {
+    setSelectedWidgets({
+      insights: true,
+      features: true,
+      playbook: true,
+      quickActions: true,
+      userProfile: true,
+      compensationSatisfaction: true,
+      marketIntelligence: true,
+      recentActivity: true,
+      collaborativeDashboard: true,
+    });
+    setWidgetLayout("grid");
+  };
+
+  // Collaborative Dashboard Data
+  const teamMembers = [
+    {
+      id: 1,
+      name: "Sarah Chen",
+      role: "Senior HR Strategy Consultant",
+      department: "Human Capital",
+      avatar: "SC",
+      status: "online",
+      lastActive: "2 minutes ago",
+      currentTask: "Compensation analysis for Q4 planning",
+    },
+    {
+      id: 2,
+      name: "Michael Rodriguez",
+      role: "Finance Director",
+      department: "Finance",
+      avatar: "MR",
+      status: "online",
+      lastActive: "5 minutes ago",
+      currentTask: "Budget allocation for merit increases",
+    },
+    {
+      id: 3,
+      name: "Jennifer Kim",
+      role: "Operations Manager",
+      department: "Operations",
+      avatar: "JK",
+      status: "away",
+      lastActive: "15 minutes ago",
+      currentTask: "Workforce planning for new markets",
+    },
+    {
+      id: 4,
+      name: "David Thompson",
+      role: "HR Business Partner",
+      department: "Human Capital",
+      avatar: "DT",
+      status: "online",
+      lastActive: "1 minute ago",
+      currentTask: "Skills gap analysis for engineering team",
+    },
+    {
+      id: 5,
+      name: "Lisa Wang",
+      role: "Financial Analyst",
+      department: "Finance",
+      avatar: "LW",
+      status: "offline",
+      lastActive: "2 hours ago",
+      currentTask: "ROI analysis for training programs",
+    },
+  ];
+
+  const collaborativeProjects = [
+    {
+      id: 1,
+      title: "Q4 Compensation Planning",
+      status: "in-progress",
+      priority: "high",
+      teams: ["HR", "Finance"],
+      progress: 75,
+      dueDate: "2025-02-15",
+      lastUpdate: "2 hours ago",
+      blockers: ["Waiting for budget approval from Finance"],
+      nextMilestone: "Finalize merit budget allocation",
+    },
+    {
+      id: 2,
+      title: "Workforce Expansion Strategy",
+      status: "planning",
+      priority: "medium",
+      teams: ["HR", "Operations"],
+      progress: 45,
+      dueDate: "2025-03-01",
+      lastUpdate: "1 day ago",
+      blockers: ["Need headcount projections from Operations"],
+      nextMilestone: "Complete market analysis",
+    },
+    {
+      id: 3,
+      title: "Skills Development Program",
+      status: "in-progress",
+      priority: "high",
+      teams: ["HR", "Finance", "Operations"],
+      progress: 60,
+      dueDate: "2025-02-28",
+      lastUpdate: "4 hours ago",
+      blockers: ["Budget constraints need Finance review"],
+      nextMilestone: "Approve training vendor contracts",
+    },
+  ];
+
+  const teamUpdates = [
+    {
+      id: 1,
+      team: "HR",
+      update: "Completed compensation benchmarking for 15 key roles",
+      timestamp: "2 hours ago",
+      author: "Sarah Chen",
+      type: "progress",
+    },
+    {
+      id: 2,
+      team: "Finance",
+      update: "Budget allocation approved for Q4 merit increases",
+      timestamp: "4 hours ago",
+      author: "Michael Rodriguez",
+      type: "decision",
+    },
+    {
+      id: 3,
+      team: "Operations",
+      update: "Headcount projections updated for new market expansion",
+      timestamp: "6 hours ago",
+      author: "Jennifer Kim",
+      type: "data",
+    },
+    {
+      id: 4,
+      team: "HR",
+      update: "Skills gap analysis reveals 23% gap in AI/ML capabilities",
+      timestamp: "1 day ago",
+      author: "David Thompson",
+      type: "insight",
+    },
+  ];
+
+  const scheduledSyncs = [
+    {
+      id: 1,
+      title: "Weekly HR-Finance Sync",
+      frequency: "Weekly",
+      nextMeeting: "2025-01-22T10:00:00Z",
+      participants: ["Sarah Chen", "Michael Rodriguez", "David Thompson"],
+      agenda: ["Budget updates", "Compensation planning", "ROI analysis"],
+    },
+    {
+      id: 2,
+      title: "Monthly Cross-Team Review",
+      frequency: "Monthly",
+      nextMeeting: "2025-01-25T14:00:00Z",
+      participants: ["All team leads"],
+      agenda: ["Project status", "Resource allocation", "Strategic alignment"],
+    },
+    {
+      id: 3,
+      title: "Quarterly Planning Session",
+      frequency: "Quarterly",
+      nextMeeting: "2025-02-01T09:00:00Z",
+      participants: ["All stakeholders"],
+      agenda: ["Q2 planning", "Budget review", "Strategic initiatives"],
+    },
+  ];
+
   const features = [
     {
       icon: BarChart3,
@@ -2715,15 +3861,317 @@ const Overview = () => {
         </p>
       </div>
 
-      {/* Enhanced Key Insights */}
+      {/* Customize Widgets Panel */}
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-          gap: "1.5rem",
-          marginBottom: "3rem",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "2rem",
+          padding: "1rem 0",
+          borderBottom: "1px solid #e2e8f0",
         }}
       >
+        <div>
+          <h2
+            style={{
+              fontSize: "24px",
+              fontWeight: "600",
+              color: "#1e293b",
+              margin: 0,
+            }}
+          >
+            Dashboard Overview
+          </h2>
+          <p
+            style={{
+              fontSize: "14px",
+              color: "#6b7280",
+              margin: "0.25rem 0 0 0",
+            }}
+          >
+            Customize your dashboard by selecting which widgets to display
+          </p>
+        </div>
+        
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "1rem",
+          }}
+        >
+          {/* Layout Selector */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+            }}
+          >
+            <label style={{ fontSize: "14px", color: "#374151", fontWeight: "500" }}>
+              Layout:
+            </label>
+            <select
+              value={widgetLayout}
+              onChange={(e) => setWidgetLayout(e.target.value)}
+              style={{
+                padding: "0.5rem",
+                border: "1px solid #d1d5db",
+                borderRadius: "6px",
+                fontSize: "14px",
+                backgroundColor: "white",
+              }}
+            >
+              <option value="grid">Grid View</option>
+              <option value="list">List View</option>
+              <option value="compact">Compact View</option>
+            </select>
+          </div>
+
+          {/* Customize Button */}
+          <button
+            onClick={() => setShowCustomizeWidgets(!showCustomizeWidgets)}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              padding: "0.75rem 1.5rem",
+              backgroundColor: showCustomizeWidgets ? "#4a90e2" : "white",
+              color: showCustomizeWidgets ? "white" : "#4a90e2",
+              border: "1px solid #4a90e2",
+              borderRadius: "8px",
+              fontSize: "14px",
+              fontWeight: "500",
+              cursor: "pointer",
+              transition: "all 0.2s ease",
+            }}
+          >
+            <Settings size={16} />
+            {showCustomizeWidgets ? "Hide Customization" : "Customize Dashboard"}
+          </button>
+        </div>
+      </div>
+
+      {/* Widget Customization Panel */}
+      {showCustomizeWidgets && (
+        <div
+          style={{
+            backgroundColor: "white",
+            borderRadius: "12px",
+            boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1)",
+            border: "1px solid #e2e8f0",
+            padding: "1.5rem",
+            marginBottom: "2rem",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "1.5rem",
+            }}
+          >
+            <h3
+              style={{
+                fontSize: "18px",
+                fontWeight: "600",
+                color: "#1e293b",
+                margin: 0,
+              }}
+            >
+              Customize Dashboard Widgets
+            </h3>
+            <button
+              onClick={resetToDefault}
+              style={{
+                padding: "0.5rem 1rem",
+                backgroundColor: "transparent",
+                color: "#6b7280",
+                border: "1px solid #e2e8f0",
+                borderRadius: "6px",
+                fontSize: "12px",
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+              }}
+            >
+              Reset to Default
+            </button>
+          </div>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+              gap: "1rem",
+            }}
+          >
+            {availableWidgets.map((widget) => {
+              const Icon = widget.icon;
+              return (
+                <div
+                  key={widget.id}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "1rem",
+                    padding: "1rem",
+                    backgroundColor: selectedWidgets[widget.id] ? "#f0f9ff" : "#f8fafc",
+                    border: selectedWidgets[widget.id] ? "2px solid #4a90e2" : "1px solid #e2e8f0",
+                    borderRadius: "8px",
+                    cursor: "pointer",
+                    transition: "all 0.2s ease",
+                  }}
+                  onClick={() => toggleWidget(widget.id)}
+                >
+                  <div
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      backgroundColor: selectedWidgets[widget.id] ? "#4a90e2" : "#6b7280",
+                      borderRadius: "8px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "white",
+                      transition: "all 0.2s ease",
+                    }}
+                  >
+                    <Icon size={20} />
+                  </div>
+                  
+                  <div style={{ flex: 1 }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.5rem",
+                        marginBottom: "0.25rem",
+                      }}
+                    >
+                      <h4
+                        style={{
+                          fontSize: "14px",
+                          fontWeight: "600",
+                          color: "#1e293b",
+                          margin: 0,
+                        }}
+                      >
+                        {widget.title}
+                      </h4>
+                      <span
+                        style={{
+                          fontSize: "10px",
+                          padding: "0.125rem 0.5rem",
+                          backgroundColor: "#e2e8f0",
+                          color: "#6b7280",
+                          borderRadius: "12px",
+                          textTransform: "uppercase",
+                          fontWeight: "500",
+                        }}
+                      >
+                        {widget.size}
+                      </span>
+                    </div>
+                    <p
+                      style={{
+                        fontSize: "12px",
+                        color: "#6b7280",
+                        margin: 0,
+                      }}
+                    >
+                      {widget.description}
+                    </p>
+                    <span
+                      style={{
+                        fontSize: "10px",
+                        color: "#4a90e2",
+                        fontWeight: "500",
+                      }}
+                    >
+                      {widget.category}
+                    </span>
+                  </div>
+
+                  <div
+                    style={{
+                      width: "20px",
+                      height: "20px",
+                      borderRadius: "4px",
+                      border: "2px solid #d1d5db",
+                      backgroundColor: selectedWidgets[widget.id] ? "#4a90e2" : "white",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      transition: "all 0.2s ease",
+                    }}
+                  >
+                    {selectedWidgets[widget.id] && (
+                      <CheckCircle size={12} color="white" />
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div
+            style={{
+              marginTop: "1.5rem",
+              padding: "1rem",
+              backgroundColor: "#f8fafc",
+              borderRadius: "8px",
+              border: "1px solid #e2e8f0",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                marginBottom: "0.5rem",
+              }}
+            >
+              <Lightbulb size={16} color="#f59e0b" />
+              <span
+                style={{
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  color: "#1e293b",
+                }}
+              >
+                Pro Tip
+              </span>
+            </div>
+            <p
+              style={{
+                fontSize: "12px",
+                color: "#6b7280",
+                margin: 0,
+              }}
+            >
+              You can drag and drop widgets to reorder them, or change the layout to better suit your workflow. 
+              Your preferences will be saved automatically.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Enhanced Key Insights */}
+      {selectedWidgets.insights && (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: widgetLayout === "compact" 
+              ? "repeat(auto-fit, minmax(200px, 1fr))" 
+              : widgetLayout === "list"
+              ? "1fr"
+              : "repeat(auto-fit, minmax(280px, 1fr))",
+            gap: widgetLayout === "compact" ? "1rem" : "1.5rem",
+            marginBottom: "3rem",
+          }}
+        >
         {insights.map((insight, index) => {
           const Icon = insight.icon;
           return (
@@ -2733,28 +4181,52 @@ const Overview = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
               style={{
-                backgroundColor: "white",
-                borderRadius: "16px",
-                boxShadow:
-                  "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-                border: "1px solid #e2e8f0",
+                background: "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)",
+                borderRadius: "20px",
+                boxShadow: "0 8px 32px rgba(96, 165, 250, 0.1)",
+                border: "1px solid rgba(96, 165, 250, 0.1)",
                 padding: "2rem",
                 position: "relative",
                 overflow: "hidden",
                 cursor: "pointer",
                 transition: "all 0.3s ease",
+                backdropFilter: "blur(10px)",
               }}
               onMouseEnter={(e) => {
-                e.target.style.transform = "translateY(-4px)";
-                e.target.style.boxShadow =
-                  "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)";
+                e.target.style.transform = "translateY(-6px)";
+                e.target.style.boxShadow = "0 16px 48px rgba(96, 165, 250, 0.2)";
+                e.target.style.borderColor = "rgba(96, 165, 250, 0.3)";
               }}
               onMouseLeave={(e) => {
                 e.target.style.transform = "translateY(0)";
-                e.target.style.boxShadow =
-                  "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)";
+                e.target.style.boxShadow = "0 8px 32px rgba(96, 165, 250, 0.1)";
+                e.target.style.borderColor = "rgba(96, 165, 250, 0.1)";
               }}
             >
+              {/* AI Glow Effect */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: "4px",
+                  background: `linear-gradient(90deg, ${insight.color} 0%, ${insight.color}80 100%)`,
+                  borderRadius: "20px 20px 0 0",
+                }}
+              />
+              {/* AI Pattern Overlay */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  right: 0,
+                  width: "80px",
+                  height: "80px",
+                  background: `radial-gradient(circle, ${insight.color}15 0%, transparent 70%)`,
+                  borderRadius: "0 20px 0 100%",
+                }}
+              />
               {/* Background Pattern */}
               <div
                 style={{
@@ -2780,16 +4252,43 @@ const Overview = () => {
                 >
                   <div
                     style={{
-                      width: "48px",
-                      height: "48px",
-                      backgroundColor: insight.color,
-                      borderRadius: "12px",
+                      width: "56px",
+                      height: "56px",
+                      background: `linear-gradient(135deg, ${insight.color} 0%, ${insight.color}CC 100%)`,
+                      borderRadius: "16px",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
+                      boxShadow: `0 4px 12px ${insight.color}40`,
+                      position: "relative",
                     }}
                   >
-                    <Icon style={{ color: "white" }} size={24} />
+                    <Icon style={{ color: "white" }} size={28} />
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: "-4px",
+                        right: "-4px",
+                        width: "16px",
+                        height: "16px",
+                        backgroundColor: "#10b981",
+                        borderRadius: "50%",
+                        border: "2px solid white",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: "6px",
+                          height: "6px",
+                          backgroundColor: "white",
+                          borderRadius: "50%",
+                          animation: "pulse 2s infinite",
+                        }}
+                      />
+                    </div>
                   </div>
                   <div
                     style={{
@@ -2878,9 +4377,11 @@ const Overview = () => {
             </motion.div>
           );
         })}
-      </div>
+        </div>
+      )}
 
       {/* Quick Actions */}
+      {selectedWidgets.quickActions && (
       <div style={{ marginBottom: "3rem" }}>
         <div
           style={{
@@ -3052,8 +4553,10 @@ const Overview = () => {
           })}
         </div>
       </div>
+      )}
 
       {/* Features Grid */}
+      {selectedWidgets.features && (
       <div
         style={{
           display: "grid",
@@ -3142,8 +4645,10 @@ const Overview = () => {
           );
         })}
       </div>
+      )}
 
       {/* User Activity & Recent Insights */}
+      {selectedWidgets.userProfile && (
       <div style={{ marginTop: "3rem" }}>
         <div
           style={{
@@ -3186,17 +4691,40 @@ const Overview = () => {
                   style={{
                     width: "40px",
                     height: "40px",
-                    backgroundColor: "#4a90e2",
                     borderRadius: "50%",
+                    backgroundImage: `url('${currentUser.profileImage}')`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    border: "2px solid #4a90e2",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    color: "white",
-                    fontWeight: "bold",
-                    fontSize: "16px",
+                    position: "relative",
                   }}
                 >
-                  {currentUser.avatar}
+                  {/* Fallback initials if image fails to load */}
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "50%",
+                      backgroundColor: "#4a90e2",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "16px",
+                      fontWeight: "bold",
+                      color: "white",
+                      opacity: 0,
+                      transition: "opacity 0.3s ease",
+                    }}
+                    onError={(e) => (e.target.style.opacity = 1)}
+                  >
+                    {currentUser.avatar}
+                  </div>
                 </div>
                 <div>
                   <h3
@@ -3463,6 +4991,233 @@ const Overview = () => {
           </div>
         </div>
       </div>
+      )}
+
+      {/* Playbook Resources */}
+      {selectedWidgets.playbook && (
+        <div style={{ marginTop: "3rem" }}>
+          <h2
+            style={{
+              fontSize: "24px",
+              fontWeight: "bold",
+              color: "#1e293b",
+              marginBottom: "1.5rem",
+            }}
+          >
+            Mercer Playbook & Resources
+          </h2>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+              gap: "1.5rem",
+            }}
+          >
+            {playbookResources.map((resource, index) => {
+              const Icon = resource.icon;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                  style={{
+                    backgroundColor: "white",
+                    borderRadius: "12px",
+                    boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1)",
+                    border: "1px solid #e2e8f0",
+                    padding: "1.5rem",
+                    position: "relative",
+                    overflow: "hidden",
+                  }}
+                >
+                  {resource.badge && (
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: "1rem",
+                        right: "1rem",
+                        backgroundColor: "#f59e0b",
+                        color: "white",
+                        padding: "0.25rem 0.75rem",
+                        borderRadius: "12px",
+                        fontSize: "10px",
+                        fontWeight: "600",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {resource.badge}
+                    </div>
+                  )}
+                  <div
+                    style={{
+                      width: "48px",
+                      height: "48px",
+                      backgroundColor: resource.color,
+                      borderRadius: "12px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginBottom: "1rem",
+                    }}
+                  >
+                    <Icon style={{ color: "white" }} size={24} />
+                  </div>
+                  <h3
+                    style={{
+                      fontSize: "18px",
+                      fontWeight: "600",
+                      color: "#1e293b",
+                      marginBottom: "0.5rem",
+                    }}
+                  >
+                    {resource.title}
+                  </h3>
+                  <p
+                    style={{
+                      fontSize: "14px",
+                      color: "#6b7280",
+                      marginBottom: "1rem",
+                      lineHeight: "1.5",
+                    }}
+                  >
+                    {resource.description}
+                  </p>
+                  <button
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "0.5rem",
+                      padding: "0.75rem 1.5rem",
+                      backgroundColor: "white",
+                      color: resource.color,
+                      border: `1px solid ${resource.color}`,
+                      borderRadius: "8px",
+                      fontWeight: "500",
+                      fontSize: "14px",
+                      cursor: "pointer",
+                      transition: "all 0.2s ease",
+                    }}
+                  >
+                    {resource.action}
+                    <ChevronRight size={16} />
+                  </button>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Recent Activity */}
+      {selectedWidgets.recentActivity && (
+        <div style={{ marginTop: "3rem" }}>
+          <h2
+            style={{
+              fontSize: "24px",
+              fontWeight: "bold",
+              color: "#1e293b",
+              marginBottom: "1.5rem",
+            }}
+          >
+            Recent Activity
+          </h2>
+          <div
+            style={{
+              backgroundColor: "white",
+              borderRadius: "12px",
+              boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1)",
+              border: "1px solid #e2e8f0",
+              padding: "1.5rem",
+            }}
+          >
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+              {recentActivity.map((activity) => {
+                const Icon = activity.icon;
+                return (
+                  <div
+                    key={activity.id}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "1rem",
+                      padding: "1rem",
+                      backgroundColor: "#f8fafc",
+                      borderRadius: "8px",
+                      border: "1px solid #e2e8f0",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "40px",
+                        height: "40px",
+                        backgroundColor: 
+                          activity.status === "completed" ? "#10b981" :
+                          activity.status === "active" ? "#4a90e2" : "#f59e0b",
+                        borderRadius: "8px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "white",
+                      }}
+                    >
+                      <Icon size={20} />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <h4
+                        style={{
+                          fontSize: "14px",
+                          fontWeight: "600",
+                          color: "#1e293b",
+                          margin: "0 0 0.25rem 0",
+                        }}
+                      >
+                        {activity.title}
+                      </h4>
+                      <p
+                        style={{
+                          fontSize: "12px",
+                          color: "#6b7280",
+                          margin: "0 0 0.25rem 0",
+                        }}
+                      >
+                        {activity.description}
+                      </p>
+                      <span
+                        style={{
+                          fontSize: "10px",
+                          color: "#6b7280",
+                          textTransform: "uppercase",
+                          fontWeight: "500",
+                        }}
+                      >
+                        {activity.time}
+                      </span>
+                    </div>
+                    <div
+                      style={{
+                        padding: "0.25rem 0.75rem",
+                        backgroundColor: 
+                          activity.status === "completed" ? "#f0fdf4" :
+                          activity.status === "active" ? "#eff6ff" : "#fffbeb",
+                        color: 
+                          activity.status === "completed" ? "#166534" :
+                          activity.status === "active" ? "#1e40af" : "#92400e",
+                        borderRadius: "12px",
+                        fontSize: "10px",
+                        fontWeight: "600",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {activity.status}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -138,21 +138,38 @@ const AppContent = () => {
     <div
       style={{
         minHeight: "100vh",
-        backgroundColor: "rgb(248, 250, 252)",
+        backgroundColor: "#f8fafc",
         fontFamily:
-          "'Source Sans Pro', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+          "'Source Sans Pro', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif",
       }}
     >
       {/* AI-Enhanced Header */}
       <header
         style={{
-          backgroundColor: "rgb(1, 45, 120)",
-          boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px",
-          borderBottomWidth: "1px",
-          borderBottomStyle: "solid",
-          borderBottomColor: "rgb(30, 64, 175)",
+          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.15)",
+          borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+          position: "relative",
+          overflow: "hidden",
+          zIndex: 100,
         }}
       >
+        {/* AI Background Pattern */}
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: `
+              radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 40% 80%, rgba(120, 119, 198, 0.2) 0%, transparent 50%)
+            `,
+            animation: "pulse 4s ease-in-out infinite",
+          }}
+        />
         <div
           style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 1rem" }}
         >
@@ -238,7 +255,7 @@ const AppContent = () => {
                       margin: 0,
                     }}
                   >
-                    Job Solutions
+                      
                   </h1>
                   <p style={{ fontSize: "16px", color: "#e2e8f0", margin: 0 }}>
                     HR Strategy Copilot
@@ -289,37 +306,22 @@ const AppContent = () => {
 
                 {/* Notifications Dropdown */}
                 {showNotifications && (
-                  <>
-                    {/* Backdrop Overlay */}
-                    <div
-                      style={{
-                        position: "fixed",
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        backgroundColor: "rgba(0, 0, 0, 0.1)",
-                        zIndex: 999998,
-                      }}
-                      onClick={() => setShowNotifications(false)}
-                    />
-                    {/* Dropdown Menu */}
-                    <div
-                      style={{
-                        position: "fixed",
-                        top: "60px",
-                        right: "20px",
-                        backgroundColor: "white",
-                        borderRadius: "12px",
-                        boxShadow:
-                          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-                        border: "1px solid #e2e8f0",
-                        minWidth: "320px",
-                        maxHeight: "400px",
-                        overflowY: "auto",
-                        zIndex: 999999,
-                        backdropFilter: "blur(10px)",
-                      }}
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "100%",
+                      right: 0,
+                      marginTop: "0.5rem",
+                      backgroundColor: "white",
+                      borderRadius: "12px",
+                      boxShadow:
+                        "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+                      border: "1px solid #e2e8f0",
+                      minWidth: "320px",
+                      maxHeight: "400px",
+                      overflowY: "auto",
+                      zIndex: 1000,
+                    }}
                   >
                     <div
                       style={{
@@ -538,8 +540,7 @@ const AppContent = () => {
                         View all notifications
                       </button>
                     </div>
-                    </div>
-                  </>
+                  </div>
                 )}
               </div>
 
@@ -1126,10 +1127,10 @@ const AppContent = () => {
       {/* Navigation */}
       <nav
         style={{
-          backgroundColor: "rgb(30, 64, 175)",
-          borderBottomWidth: "1px",
-          borderBottomStyle: "solid",
-          borderBottomColor: "rgb(30, 58, 138)",
+          backgroundColor: "#1e40af",
+          borderBottom: "1px solid #1e3a8a",
+          position: "relative",
+          zIndex: 50,
         }}
       >
         <div
@@ -1455,210 +1456,6 @@ ${index + 1}. **${source.title}**
   const generateAIResponse = (userMessage) => {
     const lowerMessage = userMessage.toLowerCase();
 
-    // Sample Report Generation
-    if (
-      lowerMessage.includes("sample report") || 
-      lowerMessage.includes("create report") ||
-      lowerMessage.includes("generate report") ||
-      lowerMessage.includes("show me a report")
-    ) {
-      const sources = [
-        {
-          title: "Executive Compensation Trends Report 2025",
-          source: "Mercer Global Executive Compensation Survey",
-          page: "Complete Executive Summary",
-          date: "Q1 2025",
-          link: "https://mercer.com/reports/exec-comp-trends-2025",
-          download: "https://mercer.com/downloads/exec-comp-trends-2025.pdf",
-          excel: "https://mercer.com/downloads/exec-comp-trends-2025.xlsx",
-          confidence: "High",
-          lastUpdated: "2025-01-15"
-        },
-        {
-          title: "Technology Sector Compensation Analysis",
-          source: "Mercer Technology Compensation Database",
-          page: "Industry Benchmark Report",
-          date: "Q1 2025",
-          link: "https://mercer.com/reports/tech-comp-analysis-2025",
-          download: "https://mercer.com/downloads/tech-comp-analysis-2025.pdf",
-          confidence: "High",
-          lastUpdated: "2025-01-10"
-        },
-        {
-          title: "Geographic Pay Differentials - APAC Region",
-          source: "Mercer Geographic Compensation Survey",
-          page: "APAC Regional Analysis",
-          date: "Q1 2025",
-          link: "https://mercer.com/reports/apac-geo-differentials-2025",
-          download: "https://mercer.com/downloads/apac-geo-differentials-2025.pdf",
-          confidence: "High",
-          lastUpdated: "2025-01-12"
-        }
-      ];
-
-      return `**📋 Sample Executive Compensation Report - ${currentClient.name}**
-
-**Report Generated**: ${new Date().toLocaleDateString('en-US', { 
-  year: 'numeric', 
-  month: 'long', 
-  day: 'numeric' 
-})}
-
----
-
-## **Executive Summary**
-
-This comprehensive compensation analysis for ${currentClient.name} reveals key insights into executive pay trends, market positioning, and strategic recommendations for 2025.
-
-### **Key Findings**
-
-**🎯 Market Position**
-• ${currentClient.name} ranks in the **75th percentile** for executive compensation competitiveness
-• **Above-market** positioning for C-suite roles by 12-18%
-• **Competitive** total rewards package with strong equity component
-
-**📈 Compensation Trends**
-• **Base Salary**: 4.2% average increase for executive roles
-• **Variable Pay**: 85% of executives receive performance-based bonuses
-• **Equity**: 92% participation in long-term incentive programs
-• **Benefits**: Premium healthcare and retirement benefits exceed market
-
-**🌍 Geographic Analysis**
-• **Singapore**: 15% premium over regional average
-• **Hong Kong**: 8% premium for financial services roles
-• **Australia**: Market-competitive positioning
-• **India**: 22% premium for technology leadership roles
-
----
-
-## **Detailed Analysis**
-
-### **C-Suite Compensation Ranges**
-
-| Role | Base Salary | Total Cash | Total Direct Comp | Market Percentile |
-|------|-------------|------------|-------------------|-------------------|
-| CEO | $850K - $1.2M | $1.4M - $2.1M | $2.8M - $4.2M | 80th |
-| CFO | $650K - $900K | $1.1M - $1.6M | $2.2M - $3.2M | 75th |
-| CTO | $600K - $850K | $1.0M - $1.5M | $2.0M - $3.0M | 78th |
-| CHRO | $550K - $750K | $950K - $1.3M | $1.9M - $2.6M | 72nd |
-
-### **Industry Benchmark Comparison**
-
-**${currentClient.industry} Sector Analysis**
-• **Revenue Size**: ${currentClient.employees.toLocaleString()}-employee organization
-• **Market Cap**: $15.2B (estimated)
-• **Growth Rate**: 12% YoY (above industry average)
-• **Profitability**: 18% EBITDA margin
-
-**Competitive Positioning**
-• **Top Quartile** for total rewards competitiveness
-• **Above Average** for equity participation
-• **Market Leading** for benefits and perquisites
-
----
-
-## **Strategic Recommendations**
-
-### **Priority Actions (Next 90 Days)**
-
-1. **📊 Compensation Review**
-   - Conduct mid-year executive compensation review
-   - Assess market movement factors (projected 4.5% increase)
-   - Evaluate retention risk for key executives
-
-2. **🎯 Performance Metrics**
-   - Align long-term incentives with strategic objectives
-   - Review and update performance measurement frameworks
-   - Implement ESG metrics in executive scorecards
-
-3. **🌐 Global Harmonization**
-   - Standardize compensation philosophy across regions
-   - Address geographic pay differentials
-   - Implement consistent equity programs
-
-### **Long-term Strategy (12-18 Months)**
-
-**Compensation Philosophy Evolution**
-• Transition to **performance-based** compensation model
-• Implement **skills-based** pay differentiation
-• Develop **career progression** frameworks
-
-**Market Positioning**
-• Maintain **top quartile** positioning for critical roles
-• Implement **retention programs** for high performers
-• Develop **succession planning** compensation strategies
-
----
-
-## **Risk Assessment**
-
-**🔴 High Risk Areas**
-• **Talent Retention**: 3 executives identified as flight risk
-• **Market Competition**: Increased poaching from competitors
-• **Regulatory Changes**: New disclosure requirements in EU
-
-**🟡 Medium Risk Areas**
-• **Equity Dilution**: Current programs may require adjustment
-• **Geographic Disparities**: Pay gaps between regions
-• **Succession Planning**: Limited internal candidates for key roles
-
-**🟢 Low Risk Areas**
-• **Benefits Package**: Competitive and comprehensive
-• **Culture Alignment**: Strong employee engagement scores
-• **Financial Performance**: Consistent growth trajectory
-
----
-
-## **Financial Impact Analysis**
-
-### **Budget Considerations**
-
-**2025 Compensation Budget**: $45.2M
-• **Base Salaries**: $28.5M (63%)
-• **Variable Pay**: $12.8M (28%)
-• **Benefits & Perquisites**: $3.9M (9%)
-
-**Projected Increases**
-• **Merit Increases**: 4.2% average ($1.2M additional)
-• **Market Adjustments**: 2.8% for critical roles ($0.8M additional)
-• **Promotion Increases**: 8.5% for internal moves ($0.6M additional)
-
-**Total Budget Impact**: +$2.6M (5.8% increase)
-
----
-
-## **Next Steps**
-
-### **Immediate Actions**
-1. **Board Presentation**: Schedule compensation committee review
-2. **Executive Communication**: Share findings with leadership team
-3. **Implementation Planning**: Develop execution timeline
-
-### **Follow-up Analysis**
-1. **Peer Comparison**: Detailed competitor analysis
-2. **Scenario Modeling**: Multiple compensation scenarios
-3. **ROI Analysis**: Return on compensation investment
-
----
-
-**📞 Contact Information**
-• **Report Author**: AI Assistant - Mercer Job Solutions
-• **Data Sources**: Mercer Global Compensation Database
-• **Last Updated**: ${new Date().toLocaleDateString()}
-• **Next Review**: Q2 2025
-
-**🔗 Additional Resources**
-• [Download Full Report (PDF)](https://mercer.com/downloads/exec-comp-trends-2025.pdf)
-• [Access Raw Data (Excel)](https://mercer.com/downloads/exec-comp-trends-2025.xlsx)
-• [Schedule Consultation](https://mercer.com/consultation)
-
----
-
-*This report was generated using Mercer's proprietary compensation database and AI-powered analysis. All data is current as of Q1 2025 and reflects market conditions at the time of analysis.*
-
-${generateSourceCitations(sources)}`;
-    }
-
     // James Patel Demo Script - VP Commercial Compensation
     if (
       lowerMessage.includes("vice president") && 
@@ -1851,7 +1648,7 @@ ${generateSourceCitations(sources)}`;
       const sources = [
         {
           title: "VP Commercial CPG Compensation Analysis - Executive Summary",
-          source: "Mercer Job Solutions AI Assistant",
+          source: "Mercer    AI Assistant",
           page: "Complete Analysis Report",
           date: new Date().toISOString().split('T')[0],
           link: "https://mercer.com/reports/vp-commercial-cpg-summary-2025",
@@ -4039,157 +3836,29 @@ const Overview = () => {
 
   return (
     <div>
-      {/* AI Analytics Hero Section */}
-      <div className="ai-card" style={{ marginBottom: "2rem", padding: "2rem" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.5rem" }}>
-          <div>
-            <h1 style={{ 
-              fontSize: "2.5rem", 
-              fontWeight: "700", 
-              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              margin: 0,
-              marginBottom: "0.5rem"
-            }}>
-              AI-Powered Analytics Dashboard
-            </h1>
-            <p style={{ 
-              fontSize: "1.125rem", 
-              color: "#64748b", 
-              margin: 0,
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem"
-            }}>
-              <Bot size={20} style={{ color: "#4facfe" }} />
-              Real-time insights powered by advanced analytics
-            </p>
-          </div>
-          <div className="ai-insight-badge">
-            <Sparkles size={16} />
-            AI Active
-          </div>
-        </div>
-        
-        {/* AI Metrics Grid */}
-        <div style={{ 
-          display: "grid", 
-          gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", 
-          gap: "1.5rem",
-          marginBottom: "2rem"
-        }}>
-          <div className="ai-metric">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-              <div>
-                <p style={{ fontSize: "0.875rem", opacity: 0.8, margin: 0 }}>Data Points Analyzed</p>
-                <h3 style={{ fontSize: "2rem", fontWeight: "700", margin: "0.5rem 0" }}>2.4M+</h3>
-                <span className="ai-trend-up">+12.3% vs last month</span>
-              </div>
-              <Database size={32} style={{ opacity: 0.8 }} />
-            </div>
-          </div>
-          
-          <div className="ai-metric">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-              <div>
-                <p style={{ fontSize: "0.875rem", opacity: 0.8, margin: 0 }}>AI Predictions</p>
-                <h3 style={{ fontSize: "2rem", fontWeight: "700", margin: "0.5rem 0" }}>94.2%</h3>
-                <span className="ai-trend-up">Accuracy Rate</span>
-              </div>
-              <Brain size={32} style={{ opacity: 0.8 }} />
-            </div>
-          </div>
-          
-          <div className="ai-metric">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-              <div>
-                <p style={{ fontSize: "0.875rem", opacity: 0.8, margin: 0 }}>Active Models</p>
-                <h3 style={{ fontSize: "2rem", fontWeight: "700", margin: "0.5rem 0" }}>47</h3>
-                <span className="ai-trend-up">+3 this week</span>
-              </div>
-              <CircuitBoard size={32} style={{ opacity: 0.8 }} />
-            </div>
-          </div>
-          
-          <div className="ai-metric">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-              <div>
-                <p style={{ fontSize: "0.875rem", opacity: 0.8, margin: 0 }}>Insights Generated</p>
-                <h3 style={{ fontSize: "2rem", fontWeight: "700", margin: "0.5rem 0" }}>1,247</h3>
-                <span className="ai-trend-up">+156 today</span>
-              </div>
-              <Lightbulb size={32} style={{ opacity: 0.8 }} />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* AI-Powered Real-Time Insights */}
-      <div className="ai-card" style={{ marginBottom: "2rem", padding: "2rem" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.5rem" }}>
-          <h2 style={{ 
-            fontSize: "1.5rem", 
-            fontWeight: "600", 
+      {/* Hero Section */}
+      <div style={{ textAlign: "center", marginBottom: "3rem" }}>
+        <h1
+          style={{
+            fontSize: "36px",
+            fontWeight: "bold",
             color: "#1e293b",
-            margin: 0,
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem"
-          }}>
-            <Cpu size={24} style={{ color: "#4facfe" }} />
-            AI-Powered Insights
-          </h2>
-          <div className="ai-insight-badge">
-            <Activity size={16} />
-            Live Analysis
-          </div>
-        </div>
-        
-        <div style={{ 
-          display: "grid", 
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", 
-          gap: "1.5rem"
-        }}>
-          <div className="ai-chart-container">
-            <h3 style={{ fontSize: "1rem", fontWeight: "600", marginBottom: "1rem", color: "#1e293b" }}>
-              Compensation Trends
-            </h3>
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
-              <div className="ai-trend-up">+8.2%</div>
-              <span style={{ fontSize: "0.875rem", color: "#64748b" }}>Tech roles showing strong growth</span>
-            </div>
-            <div style={{ height: "100px", background: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: "600" }}>
-              Real-time Chart
-            </div>
-          </div>
-          
-          <div className="ai-chart-container">
-            <h3 style={{ fontSize: "1rem", fontWeight: "600", marginBottom: "1rem", color: "#1e293b" }}>
-              Skills Gap Analysis
-            </h3>
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
-              <div className="ai-trend-down">-23%</div>
-              <span style={{ fontSize: "0.875rem", color: "#64748b" }}>AI/ML capabilities gap identified</span>
-            </div>
-            <div style={{ height: "100px", background: "linear-gradient(135deg, #ff6b6b 0%, #ffa500 100%)", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: "600" }}>
-              Gap Analysis
-            </div>
-          </div>
-          
-          <div className="ai-chart-container">
-            <h3 style={{ fontSize: "1rem", fontWeight: "600", marginBottom: "1rem", color: "#1e293b" }}>
-              Market Intelligence
-            </h3>
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
-              <div className="ai-trend-up">+5.7%</div>
-              <span style={{ fontSize: "0.875rem", color: "#64748b" }}>Market competitiveness improving</span>
-            </div>
-            <div style={{ height: "100px", background: "linear-gradient(135deg, #10b981 0%, #059669 100%)", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: "600" }}>
-              Market Data
-            </div>
-          </div>
-        </div>
+            marginBottom: "1rem",
+          }}
+        >
+          HR Strategy Dashboard
+        </h1>
+        <p
+          style={{
+            fontSize: "20px",
+            color: "#6b7280",
+            maxWidth: "768px",
+            margin: "0 auto",
+          }}
+        >
+          Comprehensive workforce insights and strategic recommendations powered
+          by Mercer's global expertise.
+        </p>
       </div>
 
       {/* Customize Widgets Panel */}
@@ -4511,12 +4180,17 @@ const Overview = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="ai-card"
               style={{
+                background: "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)",
+                borderRadius: "20px",
+                boxShadow: "0 8px 32px rgba(96, 165, 250, 0.1)",
+                border: "1px solid rgba(96, 165, 250, 0.1)",
                 padding: "2rem",
                 position: "relative",
                 overflow: "hidden",
                 cursor: "pointer",
+                transition: "all 0.3s ease",
+                backdropFilter: "blur(10px)",
               }}
               onMouseEnter={(e) => {
                 e.target.style.transform = "translateY(-6px)";
@@ -4898,8 +4572,11 @@ const Overview = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="ai-card"
               style={{
+                backgroundColor: "white",
+                borderRadius: "12px",
+                boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1)",
+                border: "1px solid #e2e8f0",
                 padding: "1.5rem",
                 cursor: "pointer",
                 transition: "box-shadow 0.2s ease",
@@ -4945,17 +4622,6 @@ const Overview = () => {
               >
                 {feature.description}
               </p>
-              
-              {/* AI Data Point */}
-              <div className="ai-data-point" style={{ marginBottom: "1rem", fontSize: "12px" }}>
-                {feature.title === "Job Benchmarking" && "2.4M+ data points"}
-                {feature.title === "Compensation Intelligence" && "94.2% accuracy"}
-                {feature.title === "Skills Gap Analysis" && "47 active models"}
-                {feature.title === "Job Descriptions" && "1,247 insights"}
-                {feature.title === "Workforce Planning" && "156 predictions"}
-                {feature.title === "Market Trends" && "Real-time updates"}
-              </div>
-              
               <button
                 style={{
                   display: "inline-flex",
